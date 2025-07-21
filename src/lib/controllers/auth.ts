@@ -1,8 +1,11 @@
-function handleLogin() {
+import {getUserById, createUser} from "../models/user";
+
+
+function handleLogin(reqBody : Object) {
 
 }
 
-function registerUser() {
+function registerUser(reqBody : Object) {
 
 }
 

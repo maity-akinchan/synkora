@@ -1,4 +1,3 @@
-
 interface User {
   uid?: string;
   name: string;
@@ -28,5 +27,11 @@ function getUserByUname(uname : String) {
 
 }
 
+function unameExists(uname : String) : Boolean{
+  // Function to check if username exists in database.
+  return true;
+}
 
-export {createUser, getUserByEmail, getUserById, getUserByUname}
+
+export default User;
+export {createUser, getUserByEmail, getUserById, getUserByUname, unameExists}
