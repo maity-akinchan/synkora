@@ -28,3 +28,26 @@
 // }
 
 // export {createDb, readDb, updateDb, readDbField};
+
+import { MongoClient, Db, Collection, ObjectId } from 'mongodb';
+import { User } from '@/lib/models/user';
+
+const uri = process.env.MONGODB_URI ||  "mongodb://localhost:27017/collab";
+console.log(uri);
+const dbName = 'sample_mflix'; 
+
+let client: MongoClient;
+let db: Db;
+
+async function connectToDatabase() {
+  if (!client) {
+    client = new MongoClient(uri);
+    await client.connect();
+    db = client.db(dbName);
+  }
+  return db;
+}
+
+export {connectToDatabase, ObjectId, Collection, Db};
+
+
