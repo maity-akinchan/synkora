@@ -9,6 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.17.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",

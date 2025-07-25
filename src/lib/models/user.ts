@@ -1,45 +1,11 @@
-// interface User {
-//   uid?: string;
-//   name: string;
-//   username: string;
-//   email: string;
-//   registerDate: Date;
-//   authInfo: {
-//     authType: 'local' | 'oauth';
-//     pwdHash?: string;
-//     oauthData?: string[];
-//   }
-// }
-
-// function createUser(body: User) {
-
-// }
-
-// function getUserByEmail(email : String) {
-
-// }
-
-// function getUserById(uid : String) {
-
-// }
-
-// function getUserByUname(uname : String) {
-
-// }
-
-// function unameExists(uname : String) : Boolean{
-//   // Function to check if username exists in database.
-//   return true;
-// }
-
-
-// export default User;
-// export {createUser, getUserByEmail, getUserById, getUserByUname, unameExists}
-
 import {connectToDatabase, ObjectId, Collection} from "@/lib/db"
+import {handleLogin, verifyToken} from "@/lib/controllers/auth";
+import bcrypt from "bcryptjs";
 
 export interface User {
+  id?: string;
   name: string;
+  username: string;
   email: string;
   password: string;
   createdAt?: Date;
@@ -52,7 +18,8 @@ export async function getUsersCollection(): Promise<Collection<User>> {
 
 export async function createUser(user: User) {
   const collection = await getUsersCollection();
-  const result = await collection.insertOne({ ...user, createdAt: new Date() });
+  const hashedPassword = await bcrypt.hashSync(user.password, 10);
+  const result = await collection.insertOne({ ...user, password: hashedPassword, createdAt: new Date()});
   return result.insertedId;
 }
 
@@ -65,7 +32,10 @@ export async function getUserById(id: string) {
   const collection = await getUsersCollection();
   return await collection.findOne({ _id: new ObjectId(id) });
 }
-
+export async function getUserByUsername(uname: string) {
+  const collection = await getUsersCollection();
+  return await collection.findOne({username: uname});
+}
 export async function updateUser(id: string, data: Partial<User>) {
   const collection = await getUsersCollection();
   const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: data });
