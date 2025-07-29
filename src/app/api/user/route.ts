@@ -20,7 +20,6 @@ export async function GET(req: Request) {
 
   if (id) {
     const user = await getUserById(id);
-    delete user?.password;
     if (user) return NextResponse.json(user);
     return NextResponse.json({ success: false, message: 'User not found' }, { status: 404 });
   }

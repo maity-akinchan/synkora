@@ -2,30 +2,39 @@
   "name": "team-flow",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "prisma-test": "NODE_OPTIONS='--import ts-node/esm' node prismaTest.ts",
+    "prisma-generate": "prisma generate",
+    "ts-run": "NODE_OPTIONS='--import ts-node/esm' node"
   },
   "dependencies": {
+    "@prisma/client": "^6.12.0",
     "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
     "jsonwebtoken": "^9.0.2",
-    "mongodb": "^6.17.0",
+    "mongodb": "^6.18.0",
+    "next": "15.4.2",
     "react": "19.1.0",
-    "react-dom": "19.1.0",
-    "next": "15.4.2"
+    "react-dom": "19.1.0"
   },
   "devDependencies": {
-    "typescript": "^5",
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
-    "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
     "eslint": "^9",
     "eslint-config-next": "15.4.2",
-    "@eslint/eslintrc": "^3"
+    "prisma": "^6.12.0",
+    "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.8.3"
   }
 }
