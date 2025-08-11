@@ -1,49 +1,83 @@
-import {connectToDatabase, ObjectId, Collection} from "@/lib/db"
-import {handleLogin, verifyToken} from "@/lib/controllers/auth";
-import bcrypt from "bcryptjs";
+import { prisma, connectToDatabase } from "@/lib/db"; // Adjust the import path as necessary
+import bcrypt from 'bcryptjs';
+import {User} from "@/generated/prisma/client";
 
-export interface User {
-  id?: string;
-  name: string;
-  username: string;
-  email: string;
-  password: string;
-  createdAt?: Date;
-}
+export type FullUser = Omit<User, 'createdAt'>;
+export type NewUser = Omit<User, 'createdAt' | 'id'>;
+export type PublicUser = Omit<User, 'password' | 'createdAt'>;
+export type SafeUser = Omit<User, 'password'>;
 
-export async function getUsersCollection(): Promise<Collection<User>> {
-  const db = await connectToDatabase();
-  return db.collection<User>('users');
-}
-
-export async function createUser(user: User) {
-  const collection = await getUsersCollection();
-  const hashedPassword = await bcrypt.hashSync(user.password, 10);
-  const result = await collection.insertOne({ ...user, password: hashedPassword, createdAt: new Date()});
-  return result.insertedId;
-}
-
-export async function getUserByEmail(email: string) {
-  const collection = await getUsersCollection();
-  return await collection.findOne({ email });
+export async function createUser(user: NewUser) {
+  await connectToDatabase();
+  const hashedPassword = bcrypt.hashSync(user.password, 10);
+  const result = await prisma.user.create({
+    data: {
+      name: user.name,
+      username: user.username,
+      email: user.email,
+      password: hashedPassword,
+      createdAt: new Date(),
+    },
+  });
+  return result.id;
 }
 
-export async function getUserById(id: string) {
-  const collection = await getUsersCollection();
-  return await collection.findOne({ _id: new ObjectId(id) });
+export async function getUserByEmail(email: string, sensitive : boolean = false) : Promise<FullUser | null> {
+  await connectToDatabase();
+  return await prisma.user.findUnique({
+    where: { email },
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      email: true,
+      password: sensitive
+    },
+  });
 }
-export async function getUserByUsername(uname: string) {
-  const collection = await getUsersCollection();
-  return await collection.findOne({username: uname});
+
+export async function getUserById(id: string, sensitive : boolean = false): Promise <FullUser | null> {
+  await connectToDatabase();
+
+  return await prisma.user.findUnique({
+    where: { id },
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      email: true,
+      password: sensitive
+    },
+  });
 }
+
+export async function getUserByUsername(username: string, sensitive : boolean = false) : Promise<FullUser | null> {
+  await connectToDatabase();
+  return await prisma.user.findUnique({
+    where: { username },
+    select: {
+      id: true,
+      name: true,
+      username: true,
+      email: true,
+      password: sensitive
+    }
+  });
+}
+
 export async function updateUser(id: string, data: Partial<User>) {
-  const collection = await getUsersCollection();
-  const result = await collection.updateOne({ _id: new ObjectId(id) }, { $set: data });
-  return result.modifiedCount > 0;
+  await connectToDatabase();
+  const result = await prisma.user.update({
+    where: { id },
+    data,
+  });
+  return result !== null;
 }
 
 export async function deleteUser(id: string) {
-  const collection = await getUsersCollection();
-  const result = await collection.deleteOne({ _id: new ObjectId(id) });
-  return result.deletedCount > 0;
+  await connectToDatabase();
+  const result = await prisma.user.delete({
+    where: { id },
+  });
+  return result !== null;
 }
