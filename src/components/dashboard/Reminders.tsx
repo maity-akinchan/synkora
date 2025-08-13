@@ -4,15 +4,26 @@
 // import { useProjectStore, Meeting } from '@/lib/commons/store/useProjectStore';
 
 // export default function Reminders() {
-//     // Gather all meetings from all projects and sort by closest upcoming meeting in future
 //     const projects = useProjectStore((state) => state.projects);
-
-//     // Flatten meetings, filter future meetings only
 //     const now = new Date();
 
-   
+//     // Flatten meetings and find closest upcoming one
+//     const allMeetings: (Meeting & { projectName?: string })[] = [];
+//     projects.forEach((p) => {
+//         p.meetings?.forEach((m) => {
+//             if (new Date(`${m.date}T${m.startTime}`) > now) {
+//                 allMeetings.push({ ...m, projectName: p.name });
+//             }
+//         });
+//     });
+
+//     const nextMeeting = allMeetings.sort(
+//         (a, b) =>
+//             new Date(`${a.date}T${a.startTime}`).getTime() -
+//             new Date(`${b.date}T${b.startTime}`).getTime()
+//     )[0];
+
 //     const formatTimeRange = (start: string, end: string) => {
-//         // Format time like 02.00 pm - 04.00 pm
 //         const format24to12 = (time24: string) => {
 //             const [hourStr, min] = time24.split(':');
 //             let hour = parseInt(hourStr, 10);
@@ -24,27 +35,56 @@
 //     };
 
 //     return (
-//         <section className="bg-white dark:bg-gray-800 rounded-md p-6 shadow flex flex-col justify-between min-h-[120px]">
-//             <h3 className="text-gray-700 dark:text-gray-300 font-semibold mb-3">Reminders</h3>
+//         <section
+//             className="rounded-md p-6 shadow flex flex-col justify-between min-h-[120px]"
+//             style={{
+//                 backgroundColor: 'var(--color-background)',
+//                 color: 'var(--color-foreground)',
+//             }}
+//         >
+//             <h3
+//                 className="font-semibold mb-3"
+//                 style={{ color: 'var(--color-foreground)' }}
+//             >
+//                 Reminders
+//             </h3>
 
 //             {nextMeeting ? (
 //                 <>
 //                     <div className="flex flex-col gap-1">
-//                         <p className="text-green-700 dark:text-green-400 font-semibold text-lg leading-snug">
+//                         <p
+//                             className="font-semibold text-lg leading-snug"
+//                             style={{ color: 'var(--color-success)' }}
+//                         >
 //                             {nextMeeting.title}
 //                         </p>
-//                         <p className="text-gray-600 dark:text-gray-400 text-sm">
-//                             {formatTimeRange(nextMeeting.startTime, nextMeeting.endTime)}
+//                         <p
+//                             className="text-sm"
+//                             style={{ color: 'var(--color-muted-foreground)' }}
+//                         >
+//                             {formatTimeRange(
+//                                 nextMeeting.startTime,
+//                                 nextMeeting.endTime
+//                             )}
 //                         </p>
 //                         {nextMeeting.projectName && (
-//                             <p className="text-xs text-gray-500 dark:text-gray-500 mt-1 italic">{nextMeeting.projectName}</p>
+//                             <p
+//                                 className="text-xs mt-1 italic"
+//                                 style={{ color: 'var(--color-muted)' }}
+//                             >
+//                                 {nextMeeting.projectName}
+//                             </p>
 //                         )}
 //                     </div>
 
 //                     <button
 //                         type="button"
-//                         className="mt-5 bg-green-700 hover:bg-green-600 text-white rounded-md py-2 flex items-center justify-center gap-2 text-sm font-semibold transition"
+//                         className="mt-5 rounded-md py-2 flex items-center justify-center gap-2 text-sm font-semibold transition"
 //                         aria-label={`Start meeting: ${nextMeeting.title}`}
+//                         style={{
+//                             backgroundColor: 'var(--color-success)',
+//                             color: 'var(--color-success-foreground)',
+//                         }}
 //                         onClick={() => alert('Meeting started! 🎉')}
 //                     >
 //                         <svg
@@ -64,7 +104,9 @@
 //                     </button>
 //                 </>
 //             ) : (
-//                 <p className="text-gray-600 dark:text-gray-400">No upcoming meetings.</p>
+//                 <p style={{ color: 'var(--color-muted-foreground)' }}>
+//                     No upcoming meetings.
+//                 </p>
 //             )}
 //         </section>
 //     );

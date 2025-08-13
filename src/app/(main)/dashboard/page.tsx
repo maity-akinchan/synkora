@@ -20,13 +20,17 @@ export default function DashboardPage() {
     const pendingProjectCount = projects.filter(p => p.tasks.some(t => t.status !== 'Completed')).length;
 
     return (
-        <div className="bg-gray-50 dark:bg-gray-900 min-h-screen">
+        <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
             <Sidebar />
             <div className="md:pl-60">
                 <Navbar />
                 <main className="p-6 pt-20 max-w-7xl mx-auto space-y-6">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
-                    <p className="text-gray-600 dark:text-gray-400">Plan, prioritize, and accomplish your tasks with ease.</p>
+                    <h1 className="text-3xl font-bold" style={{ color: 'var(--color-foreground)' }}>
+                        Dashboard
+                    </h1>
+                    <p style={{ color: 'var(--color-muted-foreground)' }}>
+                        Plan, prioritize, and accomplish your tasks with ease.
+                    </p>
 
                     {/* Summary Cards */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -53,4 +57,3 @@ export default function DashboardPage() {
         </div>
     );
 }
-

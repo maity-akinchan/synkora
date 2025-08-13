@@ -24,14 +24,14 @@ export default function TimeTracker() {
     };
 
     return (
-        <div className="bg-green-900 rounded-lg p-6 text-white shadow flex flex-col items-center gap-4">
+        <div className="bg-[var(--color-primary-dark)] rounded-lg p-6 text-[var(--color-foreground-light)] shadow flex flex-col items-center gap-4">
             <h3 className="text-xl font-semibold">Time Tracker</h3>
             <p className="text-4xl font-mono">{formatTime(time)}</p>
             <div className="flex gap-4">
                 <button
                     onClick={() => setRunning(!running)}
                     aria-label={running ? 'Pause timer' : 'Start timer'}
-                    className="bg-green-700 hover:bg-green-600 px-4 py-2 rounded shadow"
+                    className="bg-[var(--color-primary)] hover:bg-[var(--color-primary-hover)] px-4 py-2 rounded shadow"
                 >
                     {running ? 'Pause' : 'Start'}
                 </button>
@@ -41,7 +41,7 @@ export default function TimeTracker() {
                         setTime(0);
                     }}
                     aria-label="Stop timer"
-                    className="bg-red-700 hover:bg-red-600 px-4 py-2 rounded shadow"
+                    className="bg-[var(--color-danger)] hover:bg-[var(--color-danger-hover)] px-4 py-2 rounded shadow"
                 >
                     Stop
                 </button>

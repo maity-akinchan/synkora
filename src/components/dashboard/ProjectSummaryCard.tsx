@@ -13,24 +13,51 @@ export default function ProjectSummaryCard({
     highlightText,
     highlightColor = 'green',
 }: ProjectSummaryCardProps) {
-    const colorClass =
-        highlightColor === 'green'
-            ? 'text-green-600'
-            : highlightColor === 'yellow'
-                ? 'text-yellow-600'
-                : 'text-red-600';
+    // Map highlight colors to CSS variables
+    const highlightColorMap: Record<'green' | 'yellow' | 'red', string> = {
+        green: 'var(--color-success)',
+        yellow: 'var(--color-warning)',
+        red: 'var(--color-error)',
+    };
+
+    const colorStyle = { color: highlightColorMap[highlightColor] };
 
     return (
-        <div className={`rounded-lg p-5 ${highlightIncrease ? 'bg-gradient-to-br from-green-600 to-green-400 text-white' : 'bg-white dark:bg-gray-800'} shadow`}>
+        <div
+            className="rounded-lg p-5 shadow"
+            style={{
+                backgroundColor: highlightIncrease
+                    ? 'var(--color-primary)'
+                    : 'var(--color-background)',
+                color: highlightIncrease ? 'var(--color-foreground)' : 'var(--color-foreground)',
+                backgroundImage: highlightIncrease
+                    ? `linear-gradient(to bottom right, var(--color-primary), var(--bg-primary))`
+                    : undefined,
+            }}
+        >
             <h3>{title}</h3>
             <p className="text-4xl font-bold">{value}</p>
+
             {highlightIncrease && (
-                <span className={`flex items-center gap-1 text-sm mt-2 ${colorClass}`}>
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24"><path d="M5 12l5 5L20 7" /></svg>
-                    Increased from last month
+                <span className="flex items-center gap-1 text-sm mt-2" style={colorStyle}>
+                    <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        viewBox="0 0 24 24"
+                    >
+                        <path d="M5 12l5 5L20 7" />
+                    </svg>
+                    <p className="text-[var(--color-foreground)]">Increased from last month</p>
                 </span>
             )}
-            {highlightText && <p className="mt-2 text-gray-500 dark:text-gray-400">{highlightText}</p>}
+
+            {highlightText && (
+                <p className="mt-2" style={{ color: 'var(--color-muted-foreground)' }}>
+                    {highlightText}
+                </p>
+            )}
         </div>
     );
 }

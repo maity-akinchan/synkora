@@ -50,7 +50,7 @@ This is **bold text** and this is a [link](https://example.com).
   const handleEditorChange = (newValue: any) => {
     if (aceEditorRef.current) {
       const editor = aceEditorRef.current.editor;
-
+      editor.setFontSize(16)
       setMdText(newValue || initText);
 
       // // Get current line information

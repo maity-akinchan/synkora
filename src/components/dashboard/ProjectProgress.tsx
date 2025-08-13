@@ -1,13 +1,12 @@
 'use client';
 
-import { Project } from '@/lib/stores/useProjectStore';
+import { Project } from '@/lib/commons/store/useProjectStore';
 
 interface ProjectProgressProps {
     projects: Project[];
 }
 
 export default function ProjectProgress({ projects }: ProjectProgressProps) {
-    // Calculate overall progress percentage
     let totalTasks = 0;
     let completedTasks = 0;
     let inProgressTasks = 0;
@@ -25,43 +24,82 @@ export default function ProjectProgress({ projects }: ProjectProgressProps) {
     const percentCompleted = totalTasks ? Math.round((completedTasks / totalTasks) * 100) : 0;
 
     return (
-        <div className="bg-white dark:bg-gray-800 p-6 rounded-md shadow flex flex-col items-center">
-            <h3 className="mb-4 font-semibold text-gray-700 dark:text-gray-300">Project Progress</h3>
+        <div
+            className="p-6 rounded-md shadow flex flex-col items-center"
+            style={{
+                backgroundColor: 'var(--color-background)',
+                color: 'var(--color-foreground)',
+            }}
+        >
+            <h3
+                className="mb-4 font-semibold"
+                style={{ color: 'var(--color-muted-foreground)' }}
+            >
+                Project Progress
+            </h3>
+
+            {/* Progress Circle */}
             <svg viewBox="0 0 36 36" className="w-48 h-48">
+                {/* Background Track */}
                 <path
-                    className="text-gray-300 dark:text-gray-700"
                     strokeWidth="3"
-                    stroke="currentColor"
+                    stroke="var(--color-border)"
                     fill="none"
                     d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
+                {/* Progress Path */}
                 <path
-                    className="text-green-600"
                     strokeWidth="3"
                     strokeLinecap="round"
                     strokeDasharray={`${percentCompleted}, 100`}
-                    stroke="currentColor"
+                    stroke="var(--color-primary)"
                     fill="none"
                     d="M18 2.0845
-            a 15.9155 15.9155 0 0 1 0 31.831
-            a 15.9155 15.9155 0 0 1 0 -31.831"
+                       a 15.9155 15.9155 0 0 1 0 31.831
+                       a 15.9155 15.9155 0 0 1 0 -31.831"
                 />
             </svg>
-            <p className="text-center text-4xl font-bold text-gray-900 dark:text-white">{percentCompleted}%</p>
-            <p className="text-center text-sm text-gray-600 dark:text-gray-400">Project Ended</p>
+
+            {/* Percent */}
+            <p
+                className="text-center text-4xl font-bold"
+                style={{ color: 'var(--color-foreground)' }}
+            >
+                {percentCompleted}%
+            </p>
+            <p
+                className="text-center text-sm"
+                style={{ color: 'var(--color-muted-foreground)' }}
+            >
+                Project Ended
+            </p>
+
+            {/* Legend */}
             <div className="flex gap-6 mt-4">
                 <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-green-600 block" />
+                    <span
+                        className="w-4 h-4 rounded-full block"
+                        style={{ backgroundColor: 'var(--color-primary)' }}
+                    />
                     <span>Completed</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full bg-green-900 block" />
+                    <span
+                        className="w-4 h-4 rounded-full block"
+                        style={{ backgroundColor: 'var(--bg-primary)' }}
+                    />
                     <span>In Progress</span>
                 </div>
                 <div className="flex items-center gap-2">
-                    <span className="w-4 h-4 rounded-full border-2 border-gray-400 block" />
+                    <span
+                        className="w-4 h-4 rounded-full block"
+                        style={{
+                            border: `2px solid var(--color-border)`,
+                            backgroundColor: 'transparent',
+                        }}
+                    />
                     <span>Pending</span>
                 </div>
             </div>

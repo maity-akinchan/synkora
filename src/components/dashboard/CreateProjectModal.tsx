@@ -38,15 +38,38 @@ export default function CreateProjectModal({ open, setOpen }: CreateProjectModal
     return (
         <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Portal>
-                <Dialog.Overlay className="fixed inset-0 bg-black/40" />
-                <Dialog.Content className="sm:max-w-lg sm:mx-auto rounded-lg p-6 bg-white dark:bg-gray-900">
-                    <Dialog.Title>Create New Project</Dialog.Title>
-                    <Dialog.Description>Enter project details below.</Dialog.Description>
+                {/* Overlay */}
+                <Dialog.Overlay
+                    className="fixed inset-0"
+                    style={{ backgroundColor: 'rgba(0,0,0,0.4)' }}
+                />
+
+                {/* Content */}
+                <Dialog.Content
+                    className="sm:max-w-lg sm:mx-auto rounded-lg p-6"
+                    style={{
+                        backgroundColor: 'var(--color-background)',
+                        color: 'var(--color-foreground)',
+                    }}
+                >
+                    <Dialog.Title className="text-lg font-bold">
+                        Create New Project
+                    </Dialog.Title>
+                    <Dialog.Description style={{ color: 'var(--color-muted-foreground)' }}>
+                        Enter project details below.
+                    </Dialog.Description>
+
+                    {/* Form */}
                     <form onSubmit={onSubmit} className="mt-4 flex flex-col gap-4">
                         <input
                             type="text"
                             placeholder="Project Name"
                             className="input input-bordered w-full"
+                            style={{
+                                backgroundColor: 'var(--color-muted)',
+                                color: 'var(--color-foreground)',
+                                borderColor: 'var(--color-border)',
+                            }}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                             required
@@ -54,12 +77,22 @@ export default function CreateProjectModal({ open, setOpen }: CreateProjectModal
                         <textarea
                             placeholder="Description"
                             className="textarea textarea-bordered w-full"
+                            style={{
+                                backgroundColor: 'var(--color-muted)',
+                                color: 'var(--color-foreground)',
+                                borderColor: 'var(--color-border)',
+                            }}
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                         />
                         <input
                             type="date"
                             className="input input-bordered w-full"
+                            style={{
+                                backgroundColor: 'var(--color-muted)',
+                                color: 'var(--color-foreground)',
+                                borderColor: 'var(--color-border)',
+                            }}
                             value={deadline}
                             onChange={(e) => setDeadline(e.target.value)}
                             required
@@ -67,7 +100,17 @@ export default function CreateProjectModal({ open, setOpen }: CreateProjectModal
 
                         <button
                             type="submit"
-                            className="bg-green-700 text-white rounded py-2 hover:bg-green-600 transition font-semibold"
+                            className="rounded py-2 font-semibold transition"
+                            style={{
+                                backgroundColor: 'var(--color-primary)',
+                                color: 'var(--color-foreground)',
+                            }}
+                            onMouseEnter={(e) =>
+                                (e.currentTarget.style.backgroundColor = 'var(--bg-primary)')
+                            }
+                            onMouseLeave={(e) =>
+                                (e.currentTarget.style.backgroundColor = 'var(--color-primary)')
+                            }
                         >
                             Create Project
                         </button>

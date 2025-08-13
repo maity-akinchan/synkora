@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+
 import Link from 'next/link';
 import {
     HomeIcon,
@@ -10,7 +10,6 @@ import {
     QuestionMarkCircleIcon,
     ArrowRightOnRectangleIcon,
 } from '@heroicons/react/24/outline';
-
 
 const menuItems = [
     { name: 'Dashboard', icon: HomeIcon, href: '/dashboard' },
@@ -24,8 +23,9 @@ const menuItems = [
 
 export default function Sidebar() {
     return (
-        <aside className="hidden md:flex flex-col w-60 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 p-6 fixed h-full">
-            <div className="mb-6 flex items-center gap-2 text-green-700 dark:text-green-400 font-bold text-xl">
+        <aside className="hidden md:flex flex-col w-60 bg-[var(--color-background)] border-r border-[var(--color-border)] p-6 fixed h-full">
+            {/* Logo */}
+            <div className="mb-6 flex items-center gap-2 font-bold text-xl text-[var(--color-success)]">
                 <svg
                     className="w-8 h-8"
                     fill="none"
@@ -39,22 +39,26 @@ export default function Sidebar() {
                 </svg>
                 Donezo
             </div>
+
+            {/* Menu */}
             <nav className="flex flex-col gap-3 flex-1">
                 {menuItems.map(({ name, icon: Icon, href }) => (
                     <Link
                         key={name}
                         href={href}
-                        className="flex items-center gap-3 p-3 rounded-md text-gray-600 dark:text-gray-300 hover:bg-green-50 dark:hover:bg-green-800 transition"
+                        className="flex items-center gap-3 p-3 rounded-md text-[var(--color-foreground-muted)] hover:bg-[var(--color-success-bg-hover)] hover:text-[var(--color-success)] transition"
                     >
                         <Icon className="w-6 h-6" />
                         <span>{name}</span>
                     </Link>
                 ))}
             </nav>
+
+            {/* Footer */}
             <div className="mt-auto">
-                <div className="bg-green-900 bg-opacity-20 rounded-md p-3 text-white cursor-pointer">
+                <div className="bg-[var(--color-success-bg)] rounded-md p-3 text-[var(--color-success-foreground)] cursor-pointer">
                     Download our Mobile App
-                    <button className="block mt-2 w-full bg-green-700 hover:bg-green-600 text-white rounded-md py-2">
+                    <button className="block mt-2 w-full rounded-md py-2 bg-[var(--color-success)] text-[var(--color-success-foreground)] hover:bg-[var(--color-success-hover)]">
                         Download
                     </button>
                 </div>
