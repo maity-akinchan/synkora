@@ -40,6 +40,7 @@
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",
     "react-resizable-panels": "^3.0.4",
+    "react-chartjs-2": "^5.3.0",
     "rehype-katex": "^7.0.1",
     "rehype-raw": "^7.0.0",
     "rehype-sanitize": "^6.0.0",
@@ -47,7 +48,10 @@
     "remark-gfm": "^4.0.1",
     "remark-math": "^6.0.0",
     "remark-rehype": "^11.1.2",
-    "tailwind-merge": "^3.3.1"
+    "tailwind-merge": "^3.3.1",
+    "zustand": "^5.0.7",
+    "@heroicons/react": "^2.2.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
