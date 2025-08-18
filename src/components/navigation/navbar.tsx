@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import CreateProjectModal from './CreateProjectModal';
+import CreateProjectModal from '../dashboard/CreateProjectModal';
 
 export default function Navbar() {
     const [open, setOpen] = useState(false);

@@ -1,24 +1,25 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
-  provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
+  provider        = "prisma-client-js"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
-  provider = "mongodb"
-  url      = env("MONGODB_URL")
+  provider = "sqlserver"
+  url      = env("AZURESQL_URL")
+}
 
-}
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  name      String
-  username  String   @unique
-  email     String   @unique
-  password  String
-  createdAt DateTime? @default(now())
+  id        String   @id @default(dbgenerated("newid()"), map: "DF_User_id") @db.UniqueIdentifier
+  name      String   @db.NVarChar(200)
+  username  String   @unique @db.NVarChar(100)
+  email     String   @unique @db.NVarChar(255)
+  password  String   @db.NVarChar(255)
+  avatar    String   @db.NVarChar(255)
+  createdAt DateTime @default(dbgenerated("sysutcdatetime()"), map: "DF_User_createdAt")
+  updatedAt DateTime @default(dbgenerated("sysutcdatetime()"), map: "DF_User_updatedAt") @updatedAt
+
+  @@index([email], map: "idx_user_email")
+  @@index([username], map: "idx_user_username")
 }
+

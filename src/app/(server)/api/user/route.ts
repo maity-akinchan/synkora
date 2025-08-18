@@ -1,15 +1,16 @@
+"use server"
 import { NextResponse } from 'next/server';
 import { createUser, getUserByEmail, getUserById, updateUser, deleteUser } from '@/lib/models/user';
 
 export async function POST(req: Request) {
   const { name, email, password, username } = await req.json();
-
+  const avatar = "";
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
     return NextResponse.json({ success: false, message: 'User already exists' }, { status: 409 });
   }
-
-  const id = await createUser({ name, email, password, username});
+  
+  const id = await createUser({ name, email, password, username, avatar});
   return NextResponse.json({ success: true, id });
 }
 
