@@ -1,8 +1,6 @@
 'use client';
 
 import { useProjectStore } from '@/lib/commons/store/useProjectStore';
-import Sidebar from '@/components/dashboard/Sidebar';
-import Navbar from '@/components/dashboard/Navbar';
 import ProjectSummaryCard from '@/components/dashboard/ProjectSummaryCard';
 import ProjectAnalyticsChart from '@/components/dashboard/ProjectAnalyticsChart';
 import TeamCollaboration from '@/components/dashboard/TeamCollaboration';
@@ -20,11 +18,7 @@ export default function DashboardPage() {
     const pendingProjectCount = projects.filter(p => p.tasks.some(t => t.status !== 'Completed')).length;
 
     return (
-        <div className="min-h-screen" style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}>
-            <Sidebar />
-            <div className="md:pl-60">
-                <Navbar />
-                <main className="p-6 pt-20 max-w-7xl mx-auto space-y-6">
+                <main className="mx-auto space-y-6">
                     <h1 className="text-3xl font-bold" style={{ color: 'var(--color-foreground)' }}>
                         Dashboard
                     </h1>
@@ -33,7 +27,7 @@ export default function DashboardPage() {
                     </p>
 
                     {/* Summary Cards */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 w-full">
                         <ProjectSummaryCard title="Total Projects" value={totalProjects} highlightIncrease={5} highlightColor="green" />
                         <ProjectSummaryCard title="Ended Projects" value={endedProjects} highlightIncrease={6} />
                         <ProjectSummaryCard title="Running Projects" value={runningProjects} highlightIncrease={2} />
@@ -41,19 +35,17 @@ export default function DashboardPage() {
                     </div>
 
                     {/* Analytics & Reminders */}
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
                         <ProjectAnalyticsChart projects={projects} />
                         {/* <Reminders /> */}
                         <TeamCollaboration projects={projects} />
                     </div>
 
                     {/* Project Progress & Time Tracker */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                         <ProjectProgress projects={projects} />
                         <TimeTracker />
                     </div>
                 </main>
-            </div>
-        </div>
     );
 }

@@ -1,3 +1,5 @@
+"use server"
+
 import { NextRequest } from 'next/server';
 import { GoogleGenAI } from "@google/genai";
 
