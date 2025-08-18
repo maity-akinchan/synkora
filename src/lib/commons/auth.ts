@@ -1,8 +1,11 @@
 'use client';
 
-export async function onLogin(e: React.FormEvent<HTMLFormElement>) {
-  e.preventDefault();
+import { redirect, RedirectType } from 'next/navigation'
 
+export async function onLogin(e: React.FormEvent<HTMLFormElement>, setErrorState : Function, setErrorMessage : Function, resetForm:  Function) {
+  e.preventDefault();
+  let errorState : number = 1;
+  let errorMessage : string = 'und';
   const formData = new FormData(e.currentTarget);
   const username = formData.get('username') as string;
   const password = formData.get('password') as string;
@@ -16,23 +19,33 @@ export async function onLogin(e: React.FormEvent<HTMLFormElement>) {
 
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(errorData.message || 'Login failed');
+      errorMessage = errorData.message || 'Login failed'
+      errorState = 1
+      resetForm();
     }
 
     const { success, token, user } = await res.json();
 
     if (success && token && user) {
       console.log('User logged in:', user);
+      errorMessage = "Success"
+      errorState = 0
     } else {
-      throw new Error('Invalid response from server');
+      errorMessage = "Server fault!"
+      errorState = 1
+      resetForm();
     }
   } catch (err: any) {
     console.log(err.message)
   } finally {
-    console.log("Login Successful!")
+    setErrorState(errorState)
+    setErrorMessage(errorMessage)
+    if (errorMessage == "Success") {
+      redirect("/dashboard", RedirectType.push)
+    }
   }
 }
-export async function onSignup(e: React.FormEvent<HTMLFormElement>) {
+export async function onSignup(e: React.FormEvent<HTMLFormElement>, setErrorState : Function, setErrorMessage : Function, resetForm: Function) {
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
@@ -40,6 +53,9 @@ export async function onSignup(e: React.FormEvent<HTMLFormElement>) {
   const password = formData.get('password') as string;
   const email = formData.get('email') as string;
   const name = formData.get('name') as string;
+
+  let errorState : number = 1;
+  let errorMessage : string = 'und';
 
   try {
     const res = await fetch('/api/user', {
@@ -50,21 +66,28 @@ export async function onSignup(e: React.FormEvent<HTMLFormElement>) {
 
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(errorData.message || 'Signup failed');
+      errorMessage = errorData.message || 'Signup failed'
+      errorState = 1
     }
 
-    const { success, token, user } = await res.json();
+    const { success, id } = await res.json();
 
-    if (success && token && user) {
-      console.log('User signed up and logged in:', user);
-      // Optional: redirect to dashboard or show success message
+    if (success && id) {
+      errorMessage = "Success"
+      errorState = 0
     } else {
       throw new Error('Invalid response from server');
     }
   } catch (err: any) {
     console.error('Signup error:', err.message);
-    // Optionally show error to user
+    errorMessage = "Server fault!"
+    errorState = 1
   } finally {
-    console.log('Done loading!');
+    setErrorState(errorState)
+    setErrorMessage(errorMessage)
+    if (errorMessage == "Success") {
+      console.log("Redirecting..")
+      resetForm();
+    }
   }
 }

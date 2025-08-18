@@ -4,6 +4,7 @@ import { createUser, getUserByEmail, getUserById, updateUser, deleteUser } from 
 
 export async function POST(req: Request) {
   const { name, email, password, username } = await req.json();
+
   const avatar = "";
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
