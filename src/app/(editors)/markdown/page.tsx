@@ -16,6 +16,9 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable"
 import { RobotPopup } from "./_components/PopUp";
+import ImagePopup from "./_components/PopImage";
+
+
 
 export default function Page() {
   const initText = `
@@ -24,6 +27,10 @@ export default function Page() {
 This is **bold text** and this is a [link](https://example.com).
   `;
   const aceEditorRef = useRef<AceEditor | null>(null);
+
+  const [mdText, setMdText] = useState(initText);
+  const [fontSize, setFontSize] = useState(14);
+
   const handleTextToggle = (bounding: String, bs: number) => {
     // Example for parameters: bounding is `**`
     // and bs (bounding size | no of bounding chars) is 2 for bold
@@ -59,12 +66,23 @@ This is **bold text** and this is a [link](https://example.com).
       // console.log('Current Line Number:', currentLineNumber + 1); // +1 for 1-indexed display
       // console.log('Current Line Text:', currentLineText);
     }
-  };
-  const [mdText, setMdText] = useState(initText);
-  const addImageToCode = () => {
-  
-  }
+  };  
+
+
+const insertMarkdownAtCursor = (text: string) => {
+  // aceEditorRef.current?.editor.insert(text); 
+   if (aceEditorRef.current) {
+      aceEditorRef.current.editor.insert(text);
+      setMdText(aceEditorRef.current.editor.getValue());
+    }
+
+};
+const [showImagePopup, setShowImagePopup] = useState(false);
+
+
+
   return (
+    //top navbar
     <div className="flex flex-col">
       <nav className="flex gap-8 justify-center items-center bg-black/90 text-white py-2">
         <h1 className="text-xl font-bold">Synchora</h1>
@@ -73,6 +91,7 @@ This is **bold text** and this is a [link](https://example.com).
         <p>These</p>
         <p>Those</p>
       </nav>
+
       <div className="h-screen flex">
         <nav className="bg-black/90 text-white flex flex-col gap-10 px-2 py-10">
           <p>This</p>
@@ -80,6 +99,7 @@ This is **bold text** and this is a [link](https://example.com).
           <p>These</p>
           <p>Those</p>
         </nav>
+
         <ResizablePanelGroup
           direction="horizontal"
           className="flex w-full h-screen border-gray-300"
@@ -89,11 +109,23 @@ This is **bold text** and this is a [link](https://example.com).
               <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faBold} onClick={() => handleTextToggle("**", 2)}/>
               <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faItalic} onClick={() => handleTextToggle("*", 1)} />
               <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faStrikethrough} onClick={() => handleTextToggle("~", 1)} />
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faImage} onClick={addImageToCode} />
+                 <FontAwesomeIcon
+    className="hover:text-gray-500 hover:cursor-pointer text-sm"
+    icon={faImage}
+    onClick={() => setShowImagePopup(true)}
+  />
+               <ImagePopup
+            open={showImagePopup}
+            onOpenChange={setShowImagePopup}
+            onInsert={insertMarkdownAtCursor}
+                />
+
+
               <i className="text-gray-600">|</i>
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faPlus} />
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faMinus} />
+              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faPlus} onClick={() => setFontSize((size) => size + 1)}/>
+              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faMinus}  onClick={() => setFontSize((size) => Math.max(8, size - 1))} />
             </div>
+
             <AceEditor
               ref={aceEditorRef}
               mode="markdown"
@@ -102,9 +134,12 @@ This is **bold text** and this is a [link](https://example.com).
               value={mdText} // Controlled editor
               theme="tomorrow_night"
               onChange={handleEditorChange}
-              // onCopy={(e) => {console.log(e)}}
+               fontSize={fontSize} 
               name="code-panel"
               editorProps={{ $blockScrolling: true }}
+
+             
+              // onCopy={(e) => {console.log(e)}}
             />
           </ResizablePanel>
           <ResizableHandle withHandle />
@@ -113,9 +148,18 @@ This is **bold text** and this is a [link](https://example.com).
               <RobotPopup setMarkdown={setMdText}></RobotPopup>
               <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer" icon={faFilePdf} />
             </div>
-            <div className="p-10 overflow-auto h-[90%]">
+            
+            {/* <div className="p-10 overflow-auto h-[90%]">
+              <MarkdownComponent content={mdText} />
+            </div> */}
+
+            <div
+              className="p-10 overflow-auto h-[90%]"
+              style={{ fontSize: fontSize }}
+            >
               <MarkdownComponent content={mdText} />
             </div>
+
           </ResizablePanel>
         </ResizablePanelGroup>
       </div>
@@ -124,3 +168,4 @@ This is **bold text** and this is a [link](https://example.com).
 
   );
 }
+

@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { GoogleGenAI } from "@google/genai";
 
 async function getGeminiResponse(prompt: String) {
-    const ai = new GoogleGenAI({});
+    const ai = new GoogleGenAI({apiKey: process.env.GEMINI_API_KEY});
     console.log("AI CALLED!");
     
     const response = await ai.models.generateContent({
