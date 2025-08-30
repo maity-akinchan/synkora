@@ -9,7 +9,6 @@ export default function TasksList() {
                 <ProjectSummaryCard title="Running Projects" value={9} highlightIncrease={2} />
                 <ProjectSummaryCard title="Pending Project" value={3} highlightText="On Discuss" />
             </div>
-
         </>
     )
 }
