@@ -14,8 +14,8 @@ export default function TeamTable() {
   const [members, setMembers] = useState(teammates);
 
   return (
-    <div className="overflow-x-auto">
-      <table className="min-w-full text-left border-collapse">
+    <div className="min-w-screen max-h-screen">
+      <table className="min-w-full max-h-screen text-left border-collapse">
         <thead>
           <tr className="border-b">
             <th className="py-3 px-4 text-sm font-semibold text-gray-600">EMAIL</th>
