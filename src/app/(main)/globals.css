@@ -2,11 +2,16 @@
 
 :root {
   color-scheme: light dark;
-
+  --background-light: #f9fafb;
+  --background-dark: #121212;
+  --foreground-light: #1f2937;
+  --foreground-dark: #f4f4f5;
   /* Base */
-  --background: light-dark(#ffffff, #171717);
-  --foreground: light-dark(#171717, #ffffff);
-
+  --background: light-dark(#f9fafb, #121212);
+  --background-alt: light-dark(#f0f0f0, #232427);
+  --foreground: light-dark(#1f2937, #f4f4f5);
+  --foreground-alt: light-dark(#e5e7eb, #d1d5db);
+ 
   /* Brand Colors */
   --primary: #15a148;
   --secondary: #3b5998;
@@ -29,6 +34,29 @@
   --color-danger-hover: #991b1b;
 
   --color-foreground-light: #ffffff;
+  --color-primary-light: #34d399;
+  --color-primary-dark: #065f46;
+  --color-secondary-light: #4c6ef5;
+  --color-secondary-dark: #364fc7;
+  --color-accent-light: #a5b4fc;
+  --color-accent-dark: #3730a3;
+  --color-success-light: #bbf7d0;
+  --color-success-dark: #14532d;
+  --color-warning-light: #fef3c7;
+  --color-warning-dark: #92400e;
+  --color-error-light: #fecaca;
+  --color-error-dark: #7f1d1d;
+  --color-info-light: #bfdbfe;
+  --color-info-dark: #1e40af;
+  --color-neutral-light: #e5e7eb;
+  --color-neutral-dark: #4b5563;
+  --color-muted-light: #e0e0e0;
+  --color-muted-dark: #3c3c3c;
+  --color-border-light: #e5e7eb;
+  --color-border-dark: #374151;
+  --color-shadow-light: rgba(0, 0, 0, 0.1);
+  --color-shadow-dark: rgba(0, 0, 0, 0.5);
+  --color-highlight: #ffd700;
 
   /* Neutral / Muted */
   --muted: light-dark(#f3f4f6, #262626);

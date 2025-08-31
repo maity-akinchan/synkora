@@ -1,0 +1,292 @@
+@import 'tailwindcss';
+
+@plugin 'tailwindcss-animate';
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+
+  --color-surface: hsl(var(--surface));
+  --color-surface-elevated: hsl(var(--surface-elevated));
+  --color-surface-hover: hsl(var(--surface-hover));
+
+  --background-image-gradient-primary: var(--gradient-primary);
+  --background-image-gradient-hero: var(--gradient-hero);
+  --background-image-gradient-card: var(--gradient-card);
+
+  --shadow-primary: var(--shadow-primary);
+  --shadow-card: var(--shadow-card);
+  --shadow-glow: var(--glow-primary);
+
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-fade-in: fade-in 0.6s ease-out;
+  --animate-slide-up: slide-up 0.8s ease-out;
+  --animate-scale-in: scale-in 0.4s ease-out;
+  --animate-glow-pulse: glow-pulse 2s ease-in-out infinite;
+  --animate-scroll-right: scroll-right 30s linear infinite;
+  --animate-scroll-reveal: scroll-reveal 0.8s ease-out forwards;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+  @keyframes fade-in {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes scale-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  @keyframes glow-pulse {
+    0%,
+    100% {
+      box-shadow: 0 0 20px hsl(84 100% 59% / 0.3);
+    }
+    50% {
+      box-shadow: 0 0 40px hsl(84 100% 59% / 0.6);
+    }
+  }
+  @keyframes scroll-right {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+  @keyframes scroll-reveal {
+    0% {
+      opacity: 0;
+      transform: translateY(60px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+  @media (width >= --theme(--breakpoint-sm)) {
+    max-width: none;
+  }
+  @media (width >= 1400px) {
+    max-width: 1400px;
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Synkora Dark Theme - Command Center Aesthetic */
+    --background: 220 15% 6%;
+    --foreground: 210 40% 98%;
+
+    --card: 220 15% 8%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 220 15% 8%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Bright lime green primary - signature Synkora color */
+    --primary: 84 100% 59%;
+    --primary-foreground: 220 15% 6%;
+
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 220 15% 10%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 84 100% 59%;
+    --accent-foreground: 220 15% 6%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 220 15% 15%;
+    --input: 220 15% 12%;
+    --ring: 84 100% 59%;
+
+    --radius: 0.75rem;
+
+    /* Custom design tokens for Synkora */
+    --surface: 220 15% 10%;
+    --surface-elevated: 220 15% 12%;
+    --surface-hover: 220 15% 14%;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(84 100% 59%), hsl(84 80% 65%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 15% 8%), hsl(220 15% 12%));
+    --gradient-card: linear-gradient(145deg, hsl(220 15% 8%), hsl(220 15% 10%));
+    
+    /* Shadows and glows */
+    --shadow-primary: 0 10px 40px -10px hsl(84 100% 59% / 0.3);
+    --shadow-card: 0 8px 32px -8px hsl(220 15% 4% / 0.4);
+    --glow-primary: 0 0 30px hsl(84 100% 59% / 0.3);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+
+  /* Force dark mode always for this design */
+  .dark, :root {
+    --background: 220 15% 6%;
+    --foreground: 210 40% 98%;
+    --card: 220 15% 8%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 15% 8%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 84 100% 59%;
+    --primary-foreground: 220 15% 6%;
+    --secondary: 220 15% 12%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 220 15% 10%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 84 100% 59%;
+    --accent-foreground: 220 15% 6%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 220 15% 15%;
+    --input: 220 15% 12%;
+    --ring: 84 100% 59%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    padding-top: 80px; /* Account for fixed navbar */
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--background));
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary));
+  }
+
+  /* Scroll reveal animation */
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+  }
+
+  .scroll-reveal.animate-scroll-reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
