@@ -1,10 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { posts } from "../../data/posts";
+import { Navigation } from "@/components/home/Navigation";
 
 export default function BlogPage() {
     return (
         <main className="max-w-7xl mx-auto">
+            <Navigation />
             <section className="relative w-full  overflow-hidden mb-12">
                 <div className="hidden md:block relative w-full h-[500px] lg:h-[700px] rounded-xl overflow-hidden">
                     <Image
