@@ -19,6 +19,7 @@ import {
 
 export function AppSidebar() {
     const menuItems = [
+        { name: 'Home', icon: HomeIcon, href: '/home' },
         { name: 'New Project', icon: BookmarkSquareIcon, href: '/newProject'},
         { name: 'Dashboard', icon: HomeIcon, href: '/dashboard' },
         { name: 'Tasks', icon: ClipboardIcon, href: '/tasks' },
@@ -27,6 +28,7 @@ export function AppSidebar() {
         { name: 'Settings', icon: Cog6ToothIcon, href: '/settings' },
         { name: 'Help', icon: QuestionMarkCircleIcon, href: '/help' },
         { name: 'Logout', icon: ArrowRightOnRectangleIcon, href: '/logout' },
+        
     ];
 
     return (
