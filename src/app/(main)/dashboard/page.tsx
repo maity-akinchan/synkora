@@ -18,7 +18,7 @@ export default function DashboardPage() {
     const pendingProjectCount = projects.filter(p => p.tasks.some(t => t.status !== 'Completed')).length;
 
     return (
-                <main className="mx-auto space-y-6">
+                <main className="mx-auto space-y-6 p-8">
                     <h1 className="text-3xl font-bold" style={{ color: 'var(--color-foreground)' }}>
                         Dashboard
                     </h1>
