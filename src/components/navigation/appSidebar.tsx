@@ -34,9 +34,9 @@ export function AppSidebar() {
     return (
         <Sidebar >
             <SidebarHeader />
-            <SidebarContent className="overflow-hidden">
+            <SidebarContent>
                 <SidebarGroup />
-                <div className="mb-6 mx-auto flex items-center gap-2 font-bold text-xl text-[var(--color-success)]">
+                <div className="mx-auto flex items-center font-bold text-xl text-[var(--color-success)]">
                     <svg
                         className="w-8 h-8"
                         fill="none"
@@ -51,7 +51,7 @@ export function AppSidebar() {
                     Synkora
                 </div>
                 <SidebarGroup />
-                <nav className="flex flex-col gap-3 flex-1">
+                <nav className="flex flex-col gap-2 flex-1">
                     {menuItems.map(({ name, icon: Icon, href }) => (
                         <Link
                             key={name}

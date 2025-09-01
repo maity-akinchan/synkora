@@ -35,7 +35,9 @@ export default function AdminTasks(params: any) {
                     + Create Task
                 </Button>
             </div>
-            <DataTable data={params.data} />
+            <div>
+                <DataTable data={params.data} />
+            </div>
         </div>
     );
 }

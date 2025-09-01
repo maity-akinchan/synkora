@@ -4,12 +4,12 @@ import TeamTable from "./Table";
 
 export default function ManageTeam() {
   return (
-    <div className="flex flex-col min-h-screen min-w-screen">
+    <div className="flex flex-col w-full">
       {/* Navbar at the top */}
       <Navbar />
 
       {/* Main content fills below navbar */}
-      <main className="flex-1 flex flex-col bg-white p-8 min-h-screen min-w-screen ">
+      <main className="flex-1 flex flex-col bg-[var(--background)] p-8 overflow-auto">
         <Header />
         <TeamTable />
       </main>
