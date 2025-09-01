@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/resizable"
 import { RobotPopup } from "./_components/PopUp";
 import ImagePopup from "./_components/PopImage";
-
+import {AppSidebar} from "@/components/navigation/appSidebar";
 
 
 export default function Page() {
@@ -83,22 +83,12 @@ const [showImagePopup, setShowImagePopup] = useState(false);
 
   return (
     //top navbar
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full">
       <nav className="flex gap-8 justify-center items-center bg-black/90 text-white py-2">
-        <h1 className="text-xl font-bold">Synchora</h1>
-        <p>This</p>
-        <p>That</p>
-        <p>These</p>
-        <p>Those</p>
+        <h1 className="text-xl font-bold">Synkora</h1>
       </nav>
 
       <div className="h-screen flex">
-        <nav className="bg-black/90 text-white flex flex-col gap-10 px-2 py-10">
-          <p>This</p>
-          <p>That</p>
-          <p>These</p>
-          <p>Those</p>
-        </nav>
 
         <ResizablePanelGroup
           direction="horizontal"

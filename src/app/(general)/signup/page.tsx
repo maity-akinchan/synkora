@@ -9,7 +9,7 @@ export default function LoginPage() {
                     {/* subtle gradient accent panel */}
                     <div
                         aria-hidden="true"
-                        className="h-full w-full rounded-2xl bg-gradient-to-b from-white via-fuchsia-300 to-purple-700 p-6 md:p-10"
+                        className="h-full w-full rounded-2xl bg-gradient-to-b from-white via-green-300 to-green-700 p-6 md:p-10"
                     >
                         <div className="flex h-full flex-col justify-end rounded-2xl bg-black/10 p-4 md:p-8">
                             <div className="mx-auto max-w-sm text-center">

@@ -19,9 +19,7 @@ export default function ProjectAnalyticsChart({ projects }: ProjectAnalyticsChar
             {
                 label: 'Project Analytics',
                 data: [30, 74, 40, 80, 60, 53, 20],
-                backgroundColor: getComputedStyle(document.documentElement)
-                    .getPropertyValue('--color-primary')
-                    .trim() || '#16a34a',
+                backgroundColor: '#16a34a',
                 borderRadius: 9999,
                 barPercentage: 0.6,
             },

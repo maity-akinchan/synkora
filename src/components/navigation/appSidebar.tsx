@@ -16,18 +16,19 @@ import {
     ArrowRightOnRectangleIcon,
     BookmarkSquareIcon
 } from '@heroicons/react/24/outline';
+import { DrawingPinIcon, PersonIcon } from "@radix-ui/react-icons";
+import { CircuitBoardIcon } from "lucide-react";
 
 export function AppSidebar() {
     const menuItems = [
         { name: 'Home', icon: HomeIcon, href: '/home' },
-        { name: 'New Project', icon: BookmarkSquareIcon, href: '/newProject'},
-        { name: 'Dashboard', icon: HomeIcon, href: '/dashboard' },
+        { name: 'New Project', icon: BookmarkSquareIcon, href: '/new'},
+        { name: 'Dashboard', icon: CircuitBoardIcon, href: '/dashboard' },
+        { name: 'Designs', icon: DrawingPinIcon, href: '/designs' },
         { name: 'Tasks', icon: ClipboardIcon, href: '/tasks' },
         { name: 'Analytics', icon: ChartBarIcon, href: '/analytics' },
         { name: 'Team', icon: UsersIcon, href: '/teams' },
-        { name: 'Settings', icon: Cog6ToothIcon, href: '/settings' },
-        { name: 'Help', icon: QuestionMarkCircleIcon, href: '/help' },
-        { name: 'Logout', icon: ArrowRightOnRectangleIcon, href: '/logout' },
+        { name: 'User', icon: PersonIcon, href: '/logout' },
         
     ];
 
