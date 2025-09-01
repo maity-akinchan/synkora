@@ -28,26 +28,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen`}
       >
-        <span className="md:hidden mb-10 z-999">
+        <div className="md:hidden mb-10 fixed z-10">
           <Navbar />
-        </span>
-        <span className="md:w-3/12">
+        </div>
+        <div className="w-full">
           <SidebarProvider>
             <AppSidebar />
             {/* <SidebarTrigger className="fixed z-999" /> */}
-            <main>
-              <div
-                className="min-h-screen sm:py-12 md:py-0 sm:w-screen md:w-[90%]"
-                style={{ backgroundColor: 'var(--color-background)', color: 'var(--color-foreground)' }}
-              >
-                <div className="px-10 sm:py-10 md:py-20 z-1">
                   {children}
-                </div>
-              </div>
-
-            </main>
           </SidebarProvider>
-        </span>
+        </div>
       </body>
     </html>
   );

@@ -16,25 +16,28 @@ import {
     ArrowRightOnRectangleIcon,
     BookmarkSquareIcon
 } from '@heroicons/react/24/outline';
+import { DrawingPinIcon, PersonIcon } from "@radix-ui/react-icons";
+import { CircuitBoardIcon } from "lucide-react";
 
 export function AppSidebar() {
     const menuItems = [
-        { name: 'New Project', icon: BookmarkSquareIcon, href: '/newProject'},
-        { name: 'Dashboard', icon: HomeIcon, href: '/dashboard' },
+        { name: 'Home', icon: HomeIcon, href: '/home' },
+        { name: 'New Project', icon: BookmarkSquareIcon, href: '/new'},
+        { name: 'Dashboard', icon: CircuitBoardIcon, href: '/dashboard' },
+        { name: 'Designs', icon: DrawingPinIcon, href: '/designs' },
         { name: 'Tasks', icon: ClipboardIcon, href: '/tasks' },
         { name: 'Analytics', icon: ChartBarIcon, href: '/analytics' },
         { name: 'Team', icon: UsersIcon, href: '/teams' },
-        { name: 'Settings', icon: Cog6ToothIcon, href: '/settings' },
-        { name: 'Help', icon: QuestionMarkCircleIcon, href: '/help' },
-        { name: 'Logout', icon: ArrowRightOnRectangleIcon, href: '/logout' },
+        { name: 'User', icon: PersonIcon, href: '/logout' },
+        
     ];
 
     return (
         <Sidebar >
             <SidebarHeader />
-            <SidebarContent className="overflow-hidden">
+            <SidebarContent>
                 <SidebarGroup />
-                <div className="mb-6 mx-auto flex items-center gap-2 font-bold text-xl text-[var(--color-success)]">
+                <div className="mx-auto flex items-center font-bold text-xl text-[var(--color-success)]">
                     <svg
                         className="w-8 h-8"
                         fill="none"
@@ -49,7 +52,7 @@ export function AppSidebar() {
                     Synkora
                 </div>
                 <SidebarGroup />
-                <nav className="flex flex-col gap-3 flex-1">
+                <nav className="flex flex-col gap-2 flex-1">
                     {menuItems.map(({ name, icon: Icon, href }) => (
                         <Link
                             key={name}
