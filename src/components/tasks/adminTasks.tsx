@@ -3,6 +3,7 @@ import {DataTable} from "@/components/tasks/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { IconCheck, IconHourglassLow } from "@tabler/icons-react";
+import  Link from "next/link";
 
 const completedTasks = 42; // Replace with real data
 const ongoingTasks = 17;   // Replace with real data
@@ -32,7 +33,7 @@ export default function AdminTasks(params: any) {
             </div>
             <div className="flex px-6">
                 <Button variant="default" size="lg">
-                    + Create Task
+                    <Link href="/tasks/manage">+ Create Task</Link>
                 </Button>
             </div>
             <div>

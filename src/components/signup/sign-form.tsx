@@ -7,17 +7,19 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
-
+import { useRouter } from "next/router"
 export default function AuthForm() {
     const [show, setShow] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
 
-    function onSubmit(e: React.FormEvent) {
+    const onSubmit = (e: React.FormEvent) => {
         e.preventDefault()
         setLoading(true)
-        // Simulate submit
-        setTimeout(() => setLoading(false), 800)
+        setTimeout(() => {
+            setLoading(false)
+        }, 800)
     }
+
 
     return (
         <div className="mt-8">
@@ -119,7 +121,7 @@ export default function AuthForm() {
                     disabled={loading}
                     className="mt-2 w-full justify-center rounded-xl bg-white text-black hover:bg-white/90"
                 >
-                    {loading ? "Signing up..." : "Sign Up"}
+                    {loading ? "Signing up..." : <Link href="/dashboard">Sign Up</Link>}
                 </Button>
 
                 <p className="text-center text-sm text-white/60">

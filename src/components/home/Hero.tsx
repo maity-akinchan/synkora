@@ -1,6 +1,7 @@
 import { Button } from "@/components/home/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroMockups from "@/assets/home/hero-mockups.jpg";
+import Link from "next/link";
 
 export const Hero = () => {
   return (
@@ -39,14 +40,14 @@ export const Hero = () => {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 animate-slide-up">
             <Button variant="outline" className="border-border hover:border-primary text-lg px-8 py-6 h-auto">
-              LOGIN
+                <Link href="/login">LOGIN</Link>
             </Button>
             <Button 
               variant="hero"
               size="lg" 
               className="text-lg px-8 py-6 h-auto group transition-all duration-300 hover:scale-105"
             >
-              Sign up
+                <Link href="/signup">Sign Up</Link>
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
