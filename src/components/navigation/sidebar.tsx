@@ -10,12 +10,12 @@ export type SidebarProps = {
 
 function Sidebar({items, className}: SidebarProps){
     return (
-        <aside className={`w-64 bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col ${className || ''}`}>
+        <aside className={`bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col ${className || ''}`}>
             <div className='flex hover:cursor-default my-4 gap-2'>
                 <img src="logo.png" className='w-16'/>
                 <div className='flex flex-col'>
                     <p className="text-[var(--primary)] text-3xl">Synkora</p>
-                    <p className="text-sm">Turn ideas into reality.</p>
+                    <p className="text-xs">Turn ideas into reality.</p>
                 </div>
             </div>
             <nav className="flex-1 py-4">
