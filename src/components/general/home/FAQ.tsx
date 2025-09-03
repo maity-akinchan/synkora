@@ -1,6 +1,6 @@
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/home/ui/accordion";
-import { Button } from "@/components/home/ui/button";
-import { Input } from "@/components/home/ui/input";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/general/home/ui/accordion";
+import { Button } from "@/components/general/home/ui/button";
+import { Input } from "@/components/general/home/ui/input";
 
 const faqs = [
   {

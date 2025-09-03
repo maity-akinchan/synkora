@@ -1,5 +1,5 @@
 import React from "react";
-import {DataTable} from "@/components/tasks/data-table";
+import {DataTable} from "@/components/main/tasks/data-table";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { IconCheck, IconHourglassLow } from "@tabler/icons-react";

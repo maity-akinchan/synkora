@@ -1,14 +1,18 @@
 "use client";
-import { MultiSelectCombobox } from "@/components/tasks/tags";
+import { MultiSelectCombobox } from "@/components/main/tasks/tags";
+import {ComboboxDropdownMenu} from "@/components/ui/dropdown-tags"
 
 export default function Page() {
   function onSubmit(data: unknown) {
     // handle form submission
     console.log(data);
   }
+    const myLabels = new Array("hello", "Hi", "Bye")
 
   return (
     <>
+      <ComboboxDropdownMenu tagText="Hello" labels={myLabels}></ComboboxDropdownMenu>
+
       <div className="p-4 sm:p-8 w-full">
         <h1 className="text-3xl font-bold" style={{ color: 'var(--color-foreground)' }}>Manage Task</h1>
         <hr />

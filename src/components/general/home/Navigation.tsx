@@ -1,5 +1,5 @@
 "use client"
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/general/home/ui/button";
 import { cn } from "@/lib/home.utils";
 import synkoraLogo from "@/assets/home/synkora-logo.png";
 import { useRouter } from 'next/navigation';

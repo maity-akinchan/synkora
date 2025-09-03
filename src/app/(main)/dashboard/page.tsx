@@ -1,11 +1,11 @@
 'use client';
 
 import { useProjectStore } from '@/lib/commons/store/useProjectStore';
-import ProjectSummaryCard from '@/components/dashboard/ProjectSummaryCard';
-import ProjectAnalyticsChart from '@/components/dashboard/ProjectAnalyticsChart';
-import TeamCollaboration from '@/components/dashboard/TeamCollaboration';
-import ProjectProgress from '@/components/dashboard/ProjectProgress';
-import TimeTracker from '@/components/dashboard/TimeTracker';
+import ProjectSummaryCard from '@/components/main/dashboard/ProjectSummaryCard';
+import ProjectAnalyticsChart from '@/components/main/dashboard/ProjectAnalyticsChart';
+import TeamCollaboration from '@/components/main/dashboard/TeamCollaboration';
+import ProjectProgress from '@/components/main/dashboard/ProjectProgress';
+import TimeTracker from '@/components/main/dashboard/TimeTracker';
 // import Reminders from '@/components/dashboard/Reminders';
 
 export default function DashboardPage() {

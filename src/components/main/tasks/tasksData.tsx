@@ -1,4 +1,4 @@
-import ProjectSummaryCard from '@/components/dashboard/ProjectSummaryCard';
+import ProjectSummaryCard from '@/components/main/dashboard/ProjectSummaryCard';
 
 export default function TasksList() {
     return (

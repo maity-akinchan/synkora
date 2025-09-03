@@ -1,5 +1,5 @@
-import TasksList from "@/components/tasks/tasksData";
-import AdminTasks from "@/components/tasks/adminTasks";
+import TasksList from "@/components/main/tasks/tasksData";
+import AdminTasks from "@/components/main/tasks/adminTasks";
 import data from "./data.json";
 export default function Page() {
     const userType = "admin";

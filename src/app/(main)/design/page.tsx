@@ -1,4 +1,4 @@
-import { DesignsPage } from "@/components/design/designsPage";
+import { DesignsPage } from "@/components/main/design/designsPage";
 
 export default function Page() {
     return <DesignsPage />;

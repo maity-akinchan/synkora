@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { posts } from "../../data/posts";
-import { Navigation } from "@/components/home/Navigation";
+import { posts } from "../../(server)/data/posts";
+import { Navigation } from "@/components/general/home/Navigation";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Masonry } from "@/components/ui/responsive-masonry-layout";
 

@@ -1,4 +1,4 @@
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/general/home/ui/button";
 import { ArrowRight } from "lucide-react";
 import heroMockups from "@/assets/home/hero-mockups.jpg";
 import Link from "next/link";

@@ -17,7 +17,6 @@ import {
 } from "@/components/ui/resizable"
 import { RobotPopup } from "./_components/PopUp";
 import ImagePopup from "./_components/PopImage";
-import {AppSidebar} from "@/components/navigation/appSidebar";
 
 
 export default function Page() {

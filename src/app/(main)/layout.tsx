@@ -1,9 +1,16 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/navigation/appSidebar"
-import Navbar from '@/components/navigation/navbar';
+import Sidebar, {SidebarProps} from "@/components/navigation/sidebar";
 import { verifyToken } from "@/lib/controllers/auth";
+import { MenuSquare, CheckSquare, Calendar, BarChart2, Users } from "lucide-react";
+
+const sidebarItems: SidebarProps["items"] = [
+  { label: "Dashboard", icon: <MenuSquare className="w-5 h-5" />, navigate: "/dashboard", current: true },
+  { label: "Task", icon: <CheckSquare className="w-5 h-5" />, navigate: "/task", current: false },
+  { label: "Calendar", icon: <Calendar className="w-5 h-5" />, navigate: "/calendar", current: false },
+  { label: "Analytics", icon: <BarChart2 className="w-5 h-5" />, navigate: "/analytics", current: false },
+  { label: "Team", icon: <Users className="w-5 h-5" />, navigate: "/team", current: false },
+];
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -26,17 +33,13 @@ export default function RootLayout({
         <meta name="color-scheme" content="light" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 w-full h-screen antialiased`}
       >
-        <div className="md:hidden mb-10 fixed z-10">
-          <Navbar />
+        <div className="flex">
+        <Sidebar className="h-screen w-1/8" items={sidebarItems}/>
+        <div className="w-7/8">
+          {children}
         </div>
-        <div className="w-full">
-          <SidebarProvider>
-            <AppSidebar />
-            {/* <SidebarTrigger className="fixed z-999" /> */}
-                  {children}
-          </SidebarProvider>
         </div>
       </body>
     </html>

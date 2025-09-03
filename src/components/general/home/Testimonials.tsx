@@ -1,6 +1,6 @@
-import { Card, CardContent } from "@/components/home/ui/card";
+import { Card, CardContent } from "@/components/general/home/ui/card";
 import { Star, Play } from "lucide-react";
-import { Button } from "@/components/home/ui/button";
+import { Button } from "@/components/general/home/ui/button";
 
 const testimonials = [
   {

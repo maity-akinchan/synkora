@@ -1,4 +1,4 @@
-import { Card, CardContent } from "@/components/home/ui/card";
+import { Card, CardContent } from "@/components/general/home/ui/card";
 import { Monitor, Users, BarChart3, Zap, Globe, Shield } from "lucide-react";
 
 const features = [
