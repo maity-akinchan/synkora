@@ -12,9 +12,9 @@ export default function BlogPage() {
         <main className="max-w-7xl mx-auto">
             <Navigation />
 
-            {/* Hero Section with Scroll Animation */}
+            {/* Hero Section */}
             <section className="relative w-full overflow-hidden mb-12">
-                <div className="hidden md:block relative w-full">
+                <div className="hidden sm:block relative w-full">
                     <ContainerScroll
                         titleComponent={
                             <h1 className="text-5xl md:text-8xl font-bold text-white leading-tight drop-shadow-lg text-center">
@@ -38,7 +38,7 @@ export default function BlogPage() {
             {/* Blog Posts Header */}
             <h1 className="text-3xl font-bold mb-10 text-center">Recent Blog Posts</h1>
 
-            {/* Masonry-style Blog Cards */}
+            {/*Blog Cards */}
             <section className="mb-16">
                 <Masonry>
                     {posts.map((post) => (
