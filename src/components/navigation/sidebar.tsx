@@ -1,41 +1,74 @@
 import React from 'react';
-import Link from "next/link"
+import Link from "next/link";
+import Image from "next/image"; // Use Next.js Image for optimization
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-export type SidebarProps = {
-    items: { label: string; icon?: React.ReactNode; navigate: string; current: boolean}[];
-    className?: string;
+import clsx from 'clsx'; // A utility for constructing className strings conditionally
+
+// Define a type for a single sidebar item for clarity
+export type SidebarItem = {
+    label: string;
+    icon?: React.ReactNode;
+    navigate: string;
+    current: boolean;
 };
 
+// Update props to make the header dynamic and reusable
+export type SidebarProps = {
+    items: SidebarItem[];
+    className?: string;
+    logoSrc: string;
+    title: string;
+    tagline?: string;
+};
 
-function Sidebar({items, className}: SidebarProps){
+function Sidebar({ items, className, logoSrc, title, tagline }: SidebarProps) {
     return (
-        <aside className={`bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col ${className || ''}`}>
-            <div className='flex hover:cursor-default my-4 gap-2'>
-                <img src="logo.png" className='w-16'/>
+        <aside className={clsx('bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col p-4', className)}>
+            {/* Header section is now a link to the homepage and uses props */}
+            <Link href="/" className='flex hover:cursor-pointer mb-4 gap-3 items-center'>
+                <Image 
+                    src={logoSrc} 
+                    alt={`${title} logo`} // Add descriptive alt text for accessibility
+                    width={56} 
+                    height={56}
+                    className='w-14 h-14'
+                />
                 <div className='flex flex-col'>
-                    <p className="text-[var(--primary)] text-3xl">Synkora</p>
-                    <p className="text-xs">Turn ideas into reality.</p>
+                    <p className="text-[var(--primary)] text-3xl font-bold">{title}</p>
+                    {tagline && <p className="text-xs text-gray-400">{tagline}</p>}
                 </div>
-            </div>
-            <nav className="flex-1 py-4">
-                    {items.map((item, idx) => (
-                        item.current ? 
-                        <p key={idx} className={"flex hover:cursor-default items-center px-4 py-2 transition-colors text-[var(--primary)] text-xl my-2 border-1 rounded-xl"}>
-                            {item.icon && <span className="mr-3">{item.icon}</span>}
-                            <span className='w-full'>{item.label}</span>
-                            <FontAwesomeIcon icon={faArrowRight} className='w-4'></FontAwesomeIcon>
-                        </p> 
-                        :
-                        <Link
-                            href={item.navigate}
-                            key={idx}
-                            className={"flex items-center px-4 py-2 hover:bg-[var(--background)] cursor-pointer transition-colors"}
-                        >
-                                {item.icon && <span className="mr-3">{item.icon}</span>}
-                                <span>{item.label}</span>
-                        </Link>
+            </Link>
+
+            {/* Navigation is now a semantic list (<ul>) */}
+            <nav className="flex-1">
+                <ul className="space-y-2">
+                    {items.map((item) => (
+                        <li key={item.navigate}> {/* Use a unique identifier for the key */}
+                            <Link
+                                href={item.navigate}
+                                // Use clsx for cleaner conditional classnames
+                                className={clsx(
+                                    "flex items-center px-4 py-2 transition-colors rounded-lg",
+                                    {
+                                        // Classes for the current/active item
+                                        "bg-[var(--background)] text-[var(--primary)] text-lg font-semibold": item.current,
+                                        // Classes for non-active items
+                                        "hover:bg-[var(--background)]": !item.current,
+                                    }
+                                )}
+                                // Important for accessibility to indicate the current page
+                                aria-current={item.current ? "page" : undefined}
+                            >
+                                {item.icon && <span className="mr-3 w-6 text-center">{item.icon}</span>}
+                                <span className='flex-grow'>{item.label}</span>
+                                {item.current && (
+                                    <FontAwesomeIcon icon={faArrowRight} className='w-4 h-4' />
+                                )}
+                            </Link>
+                        </li>
                     ))}
+                </ul>
             </nav>
         </aside>
     );

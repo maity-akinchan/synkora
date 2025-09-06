@@ -1,16 +1,9 @@
+// app/layout.tsx
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar, {SidebarProps} from "@/components/navigation/sidebar";
-import { verifyToken } from "@/lib/controllers/auth";
-import { MenuSquare, CheckSquare, Calendar, BarChart2, Users } from "lucide-react";
-
-const sidebarItems: SidebarProps["items"] = [
-  { label: "Dashboard", icon: <MenuSquare className="w-5 h-5" />, navigate: "/dashboard", current: true },
-  { label: "Task", icon: <CheckSquare className="w-5 h-5" />, navigate: "/task", current: false },
-  { label: "Calendar", icon: <Calendar className="w-5 h-5" />, navigate: "/calendar", current: false },
-  { label: "Analytics", icon: <BarChart2 className="w-5 h-5" />, navigate: "/analytics", current: false },
-  { label: "Team", icon: <Users className="w-5 h-5" />, navigate: "/team", current: false },
-];
+import { MainLayout } from "@/components/main/layout"; // NEW: Import a new client component
+import { Metadata } from "next"; // NEW: Import Metadata type for SEO
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -22,25 +15,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// NEW: Add metadata for SEO and better browser tab information
+export const metadata: Metadata = {
+  title: "App Dashboard",
+  description: "Dashboard for your application.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning> {/* Add suppressHydrationWarning for theme providers etc. */}
       <head>
         <meta name="color-scheme" content="light" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 w-full h-screen antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 w-full h-screen antialiased bg-gray-50 text-gray-900`}
       >
-        <div className="flex">
-        <Sidebar className="fixed h-screen w-3/20" items={sidebarItems}/>
-        <div className="ml-[16%] w-17/20">
+        {/* MODIFIED: Wrap children in the new MainLayout client component */}
+        <MainLayout>
           {children}
-        </div>
-        </div>
+        </MainLayout>
       </body>
     </html>
   );

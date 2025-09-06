@@ -28,11 +28,12 @@ export const SearchDropdown: React.FC<SearchDropdownProps> = ({ onFilterChange }
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <button className="w-fit flex focus:outline-none active:outline-none">
-            <IconFilter2Search /> {selected}
+        <button className="w-fit flex items-center gap-1 text-sm focus:outline-none active:outline-none">
+          <IconFilter2Search className="w-4 h-4" /> {/* Shrink the icon size */}
+          <span className="text-xs">{selected}</span> {/* Reduce font size of the selected filter */}
         </button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="text-xs"> {/* Reduce font size of dropdown items */}
         <DropdownMenuLabel>Filter By</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => handleSelect("All")}>All</DropdownMenuItem>

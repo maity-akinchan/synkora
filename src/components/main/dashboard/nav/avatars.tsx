@@ -14,13 +14,13 @@ export default function Avatars() {
       {uris.map((uri, index) => (
         <Avatar
           key={index}
-          className={`-ml-2 ${index === 0 ? "ml-0" : ""} z-${10 + index * 10}`}
+          className={`-ml-2 ${index === 0 ? "ml-0" : ""} z-${10 + index * 10} w-7 h-7`} // Reduced size
         >
           <AvatarImage src={uri} />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ))}
-        <PlusCircledIcon className="ml-2 w-8 h-8 text-[var(--foreground-alt)]" />
+      <PlusCircledIcon className="ml-2 w-6 h-6 text-[var(--foreground-alt)]" /> {/* Reduced size */}
     </div>
   );
 }
