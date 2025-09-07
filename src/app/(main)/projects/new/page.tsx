@@ -1,4 +1,4 @@
-import {CreateProjectPage} from "@/components/main/new/NewProject";
+import {CreateProjectPage} from "@/components/main/projects/new/NewProject";
 
 export default function Page() {
   return <div className="p-8 w-full">
