@@ -71,7 +71,7 @@ export default function ImagePopup ({
             />
             <Button
               onClick={handleUrlInsert}
-              className="mt-2 w-full"
+              className="mt-2 w-full bg-green-900 text-white"
               disabled={!url.trim()}
             >
               Insert Image
@@ -80,7 +80,7 @@ export default function ImagePopup ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
+          <Button variant="outline" onClick={() => onOpenChange(false)} >
             Cancel
           </Button>
         </DialogFooter>
