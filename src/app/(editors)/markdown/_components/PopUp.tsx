@@ -88,7 +88,7 @@ export function RobotPopup({ setMarkdown }: RobotPopupProps) {
 
                     <DialogFooter>
                         <DialogClose asChild>
-                            <Button onClick={()=>{setIsOpen(false)}}variant="outline" type="button">Cancel</Button>
+                            <Button className="bg-green-500" onClick={()=>{setIsOpen(false)}}variant="outline" type="button">Cancel</Button>
                         </DialogClose>
                         <Button disabled={loading} type="submit">{loading ? "Loading" : "Submit"}</Button>
                     </DialogFooter>
