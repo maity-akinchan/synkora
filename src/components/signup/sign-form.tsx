@@ -126,7 +126,7 @@ export default function AuthForm() {
 
                 <p className="text-center text-sm text-white/60">
                     Already have an account?{" "}
-                    <Link href="/login" className="font-medium text-white hover:underline">
+                    <Link href="/signin" className="font-medium text-white hover:underline">
                         Log in
                     </Link>
                 </p>

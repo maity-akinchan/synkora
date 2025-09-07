@@ -4,7 +4,7 @@ import "newrelic";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["images.unsplash.com"], // ✅ allow Unsplash
+    domains: ["images.unsplash.com", 'picsum.photos'],
   },
 };
 

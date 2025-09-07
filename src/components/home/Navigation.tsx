@@ -4,6 +4,7 @@ import { cn } from "@/lib/home.utils";
 import synkoraLogo from "@/assets/home/synkora-logo.png";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import logo from "@/assets/home/synkora-logo.png";
 
 interface NavigationProps {
   className?: string;
@@ -20,8 +21,8 @@ export const Navigation = ({ className }: NavigationProps) => {
       <div className="px-8 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center">
-            <img src={synkoraLogo} alt="Synkora" className="w-8 h-8" />
+          <div className="flex items-center ">
+            <img src={"/logo.png"} alt="Synkora" className="w-10 h-10" />
           </div>
 
           {/* Navigation Links */}

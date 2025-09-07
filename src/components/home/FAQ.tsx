@@ -50,7 +50,7 @@ export const FAQ = () => {
             <span className="text-primary">Synkora</span>
           </h2>
         </div>
-
+ 
         {/* FAQ Accordion */}
         <div className="max-w-3xl mx-auto mb-20">
           <Accordion type="single" collapsible className="space-y-4">
@@ -68,7 +68,7 @@ export const FAQ = () => {
                   <p className="text-muted-foreground leading-relaxed">{faq.answer}</p>
                 </AccordionContent>
               </AccordionItem>
-            ))}
+            ))} 
           </Accordion>
 
           <div className="text-center mt-12 animate-fade-in">
