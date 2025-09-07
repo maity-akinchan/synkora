@@ -2,7 +2,7 @@ import Navbar from "@/components/main/dashboard/nav/navbar"
 import MiniNav from "@/components/main/dashboard/nav/mininav"
 import { IconFileImport, IconPlus, IconInfoCircle } from "@tabler/icons-react"
 import Card from "@/components/main/dashboard/card";
-import ButtonIcon from "@/components/main/dashboard/button"
+import ButtonIcon from "@/components/main/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { RecentMeeting, ScheduleMeeting } from "@/components/main/dashboard/meeting";
 import { ProjectCollaboration } from "@/components/main/dashboard/collaboration-table";

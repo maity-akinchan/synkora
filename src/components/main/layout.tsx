@@ -6,14 +6,15 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Sidebar, { SidebarItem } from "@/components/navigation/sidebar";
 import Header from "@/components/navigation/header";
-import { MenuSquare, CheckSquare, Calendar, BarChart2, Users } from "lucide-react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { 
   faHouse,
   faChartLine, 
   faFolder, 
   faUsers, 
-  faGear 
+  faGear,
+  faListCheck,
+  faClone
 } from '@fortawesome/free-solid-svg-icons';
 
 export const navigationItems: SidebarItem[] = [
@@ -30,15 +31,27 @@ export const navigationItems: SidebarItem[] = [
     current: true,
   },
   {
+    label: "Tasks",
+    icon: <FontAwesomeIcon icon={faListCheck} />,
+    navigate: "/tasks",
+    current: false,
+  },
+  {
     label: "Projects",
     icon: <FontAwesomeIcon icon={faFolder} />,
     navigate: "/projects",
     current: false,
   },
   {
+    label: "Templates",
+    icon: <FontAwesomeIcon icon={faClone} />,
+    navigate: "/templates",
+    current: false,
+  },
+  {
     label: "Team Members",
     icon: <FontAwesomeIcon icon={faUsers} />,
-    navigate: "/team",
+    navigate: "/teams",
     current: false,
   },
   {
