@@ -1,7 +1,7 @@
 import Button from "@/components/main/button";
 import { IconFilter, IconSortDescending } from "@tabler/icons-react";
 import { ProjectCardsLoader } from "@/components/main/projects/card";
-import { CreateProjectPage } from "@/components/main/new/NewProject";
+import { CreateProjectPage } from "@/components/main/projects/new/NewProject";
 const sampleProjects = [
   {
     projectName: 'Dashboard UI',
