@@ -11,6 +11,9 @@ import {
     //SaveButton,
 } from "@/components/user";
 
+import {Button} from "@/components/ui/button";
+import { backgroundGradientStyle } from "@/lib/commons/styles";
+import { TeamSettingsPage } from "@/components/user/team-settings";
 export default function Page() {
     const [formData, setFormData] = useState({
         name: "Arshia Sharma",
@@ -40,17 +43,14 @@ export default function Page() {
 
     return (
         <div className="py-6 min-h-screen font-sans bg-[var(--background)] grid grid-cols-12 gap-8">
-            <div className="p-4 flex gap-4 flex-col h-full rounded-3xl bg-[var(--background-alt)] col-span-8">
+            <div className={`p-4 flex gap-4 flex-col h-full rounded-3xl ${backgroundGradientStyle} col-span-8`}>
                 <div className="px-4">
                     <h1 className="text-2xl font-bold" style={{ color: 'var(--color-foreground)' }}>Team Settings</h1>
                 </div>
                 <hr />
-                <div className="min-h-screen bg-[var(--background-alt)] flex items-center justify-center p-8">
-
-
-                </div>
+                <TeamSettingsPage />
             </div>
-            <div className="h-full rounded-3xl bg-[var(--background-alt)] col-span-4 py-8">
+            <div className={`h-full rounded-3xl ${backgroundGradientStyle} col-span-4 py-8`}>
                 <div className="px-4">
                     <h1 className="text-2xl font-semibold mb-2">User Settings</h1>
                     <hr className="mb-6 border-[var(--border)]" />
@@ -72,6 +72,7 @@ export default function Page() {
                             <EmailCard email={formData.email} handleChange={handleChange} />
                             <ContactCard contact={formData.contact} handleChange={handleChange} />
                         </span>
+                        <Button className="lg:col-span-2 mt-5">Update User</Button>
                     </div>
                 </div>
             </div>

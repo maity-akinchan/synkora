@@ -1,10 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { IconMail, IconNotification } from "@tabler/icons-react"
+import { backgroundGradientStyle } from "@/lib/commons/styles";
 
 export default function MiniNav() {
     return (
         <>
-            <div className="flex justify-between w-full gap-4 bg-[var(--background-alt)] items-center px-4 pb-3 pt-5 rounded-b-xl">
+            <div className={`flex justify-between w-full gap-4 ${backgroundGradientStyle} items-center px-4 pb-3 pt-5 rounded-b-xl`}>
                 <Avatar className="w-10 h-10"> {/* Shrink the avatar */}
                     <AvatarImage src={"https://github.com/shadcn.png"} />
                     <AvatarFallback>CN</AvatarFallback>

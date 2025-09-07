@@ -23,7 +23,7 @@ const bgProps = [
 
 export function ProjectCard({ project }: ProjectCardProps) {
     return (
-        <div className="p-3 flex flex-col gap-2 border rounded-2xl w-full text-xs">
+        <div className="p-3 flex bg-[var(--foreground-alt)] text-[var(--background-alt)] flex-col gap-2 border rounded-2xl w-full text-xs">
             <div className="flex items-center gap-2">
                 <h2 className="font-medium w-2/3">{project.projectName}</h2>
                 <span className="flex justify-end items-center gap-1 w-1/3">

@@ -4,7 +4,7 @@ import Image from "next/image"; // Use Next.js Image for optimization
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import clsx from 'clsx'; // A utility for constructing className strings conditionally
-
+import { backgroundGradientStyle } from '@/lib/commons/styles';
 // Define a type for a single sidebar item for clarity
 export type SidebarItem = {
     label: string;
@@ -24,7 +24,7 @@ export type SidebarProps = {
 
 function Sidebar({ items, className, logoSrc, title, tagline }: SidebarProps) {
     return (
-        <aside className={clsx('bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col p-4', className)}>
+        <aside className={clsx('bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col p-4 shadow-xs shadow-green-500', className + " " + backgroundGradientStyle)}>
             {/* Header section is now a link to the homepage and uses props */}
             <Link href="/" className='flex hover:cursor-pointer mb-4 gap-3 items-center'>
                 <Image 

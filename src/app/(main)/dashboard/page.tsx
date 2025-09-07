@@ -6,7 +6,7 @@ import ButtonIcon from "@/components/main/button"
 import { Skeleton } from "@/components/ui/skeleton"
 import { RecentMeeting, ScheduleMeeting } from "@/components/main/dashboard/meeting";
 import { ProjectCollaboration } from "@/components/main/dashboard/collaboration-table";
-
+import { backgroundGradientStyle } from "@/lib/commons/styles";
 const sampleProjects = [
   {
     id: 1,
@@ -85,7 +85,7 @@ export default function App() {
                 {/* Left Column */}
                 <div className="w-full lg:w-[65%] flex flex-col gap-4 min-h-0">
                     <Navbar />
-                    <div className="flex-1 bg-[var(--background-alt)] rounded-3xl overflow-auto min-h-0">
+                    <div className={`flex-1 ${backgroundGradientStyle} rounded-3xl overflow-auto min-h-0`}>
                         <div className="flex flex-col gap-y-4 p-4 sm:p-6">
                             <div className="flex flex-col md:flex-row items-start md:items-center gap-3 justify-between">
                                 <div className="flex-grow">
@@ -130,7 +130,7 @@ export default function App() {
                 {/* Right Column */}
                 <div className="w-full lg:w-[35%] flex flex-col gap-4 min-h-0">
                     <MiniNav />
-                    <div className="flex-1 bg-[var(--background-alt)] rounded-3xl p-4 sm:p-6 min-h-0 overflow-auto">
+                    <div className={`flex-1 ${backgroundGradientStyle} rounded-3xl p-4 sm:p-6 min-h-0 overflow-auto`}>
                         <h2 className="text-xl font-bold mb-4">Activity Feed</h2>
                          <RecentMeeting />
                         <ScheduleMeeting  scheduledMeetings={scheduledMeetings} />

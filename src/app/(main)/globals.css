@@ -7,8 +7,9 @@
   --foreground-light: #1f2937;
   --foreground-dark: #f4f4f5;
   /* Base */
-  --background: light-dark(#f9fafb, #121212);
-  --background-alt: light-dark(#f0f0f0, #232427);
+  --background: light-dark(#f9fafb, #000000);
+  --background-alt: light-dark(#f0f0f0, #0f0f0f);
+  --background-salt: light-dark(#f9f9f9, #0a0a0a);
   --foreground: light-dark(#1f2937, #f4f4f5);
   --foreground-alt: light-dark(#e5e7eb, #d1d5db);
  

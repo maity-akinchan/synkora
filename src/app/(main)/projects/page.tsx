@@ -2,6 +2,8 @@ import Button from "@/components/main/button";
 import { IconFilter, IconSortDescending } from "@tabler/icons-react";
 import { ProjectCardsLoader } from "@/components/main/projects/card";
 import { CreateProjectPage } from "@/components/main/projects/new/NewProject";
+import {backgroundGradientStyle} from "@/lib/commons/styles";
+
 const sampleProjects = [
   {
     projectName: 'Dashboard UI',
@@ -31,7 +33,7 @@ const sampleProjects = [
 export default function App() {
     return (
         <div className="py-6 min-h-screen font-sans bg-[var(--background)] grid grid-cols-12 gap-8">
-            <div className="p-4 flex gap-4 flex-col h-full rounded-3xl bg-[var(--background-alt)] col-span-8">
+            <div className={`p-4 flex gap-4 flex-col h-full rounded-3xl ${backgroundGradientStyle} col-span-8`}>
                 <h1 className="text-2xl font-bold">Projects</h1>
                 <hr />
                 <div className="flex flex-col gap-4">
@@ -51,7 +53,7 @@ export default function App() {
                 </div>
                 <hr />
             </div>
-            <div className="h-full rounded-3xl bg-[var(--background-alt)] col-span-4">
+            <div className={`h-full rounded-3xl ${backgroundGradientStyle} col-span-4`}>
                 <CreateProjectPage />
             </div>
         </div>
