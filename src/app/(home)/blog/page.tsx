@@ -5,6 +5,8 @@ import { posts } from "../../(server)/data/posts";
 import { Navigation } from "@/components/general/home/Navigation";
 import { ContainerScroll } from "@/components/ui/container-scroll-animation";
 import { Masonry } from "@/components/ui/responsive-masonry-layout";
+// import { Footer } from "react-day-picker";
+import { Footer } from "@/components/general/home/Footer";
 
 
 export default function BlogPage() {
@@ -81,6 +83,7 @@ export default function BlogPage() {
                     ))}
                 </Masonry>
             </section>
+            <Footer />
         </main>
     );
 }
