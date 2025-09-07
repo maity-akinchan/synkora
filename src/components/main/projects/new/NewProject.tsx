@@ -62,7 +62,7 @@ export function CreateProjectPage() {
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
                 required
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -79,7 +79,7 @@ export function CreateProjectPage() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -96,7 +96,7 @@ export function CreateProjectPage() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 required
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -121,7 +121,7 @@ export function CreateProjectPage() {
                 placeholder="e.g. frontend, dashboard, marketing"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
             <p className="text-sm text-[var(--foreground-alt)] mt-1">

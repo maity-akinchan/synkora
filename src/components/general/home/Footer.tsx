@@ -1,4 +1,5 @@
 import synkoraLogo from "@/assets/home/synkora-logo.png";
+import Image from "next/image";
 
 export const Footer = () => {
   return (
@@ -8,7 +9,7 @@ export const Footer = () => {
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <img src={synkoraLogo} alt="Synkora" className="w-8 h-8" />
+              <Image src={synkoraLogo} alt="Synkora" className="w-8 h-8" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
               Your team's visual command center. Task management, live dashboards, and whiteboard collaboration in one powerful workspace.
@@ -35,8 +36,8 @@ export const Footer = () => {
           <div>
             <h3 className="font-semibold text-foreground mb-4">Company</h3>
             <ul className="space-y-2">
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">About</a></li>
-              <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
+              <li><a href="/about" className="text-muted-foreground hover:text-primary transition-colors">About</a></li>
+              <li><a href="/blog" className="text-muted-foreground hover:text-primary transition-colors">Blog</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Careers</a></li>
               <li><a href="#" className="text-muted-foreground hover:text-primary transition-colors">Contact</a></li>
             </ul>

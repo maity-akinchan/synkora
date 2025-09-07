@@ -12,10 +12,7 @@ interface NavigationProps {
 
 export const Navigation = ({ className }: NavigationProps) => {
   const router = useRouter();
-  const handleButtonClick = () => {
-    console.log("Clicked!")
-    router.push('/login');
-  };
+
   return (
     <nav className={cn("fixed top-2.5 left-0 right-0 mx-auto max-w-6xl z-50 bg-background/80 backdrop-blur-lg border border-border rounded-full", className)}>
       <div className="px-8 py-4">
@@ -39,12 +36,15 @@ export const Navigation = ({ className }: NavigationProps) => {
             <a href="#faq" className="text-muted-foreground hover:text-foreground transition-colors">
               FAQs
             </a>
+            <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
+              Blogs
+            </a>
           </div>
 
           {/* CTA Buttons */}
           <div className="flex items-center space-x-4">
             <Button variant="ghost" className="hidden sm:inline-flex">
-              <Link href="/login">LOGIN</Link>
+              <Link href="/signin">LOGIN</Link>
             </Button>
             <Button variant="outline" className="border-border hover:border-primary text-foreground">
               Notify me

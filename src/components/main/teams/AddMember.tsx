@@ -49,7 +49,7 @@ export function InviteTeamMemberForm() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -64,7 +64,7 @@ export function InviteTeamMemberForm() {
                 value={role}
                 onValueChange={setRole}
               >
-                <SelectTrigger className="bg-[var(--background-alt)] text-[var(--foreground)]">
+                <SelectTrigger className="text-[var(--foreground)]">
                   <SelectValue placeholder="Select role" />
                 </SelectTrigger>
                 <SelectContent>
@@ -92,7 +92,7 @@ export function InviteTeamMemberForm() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 rows={4}
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>

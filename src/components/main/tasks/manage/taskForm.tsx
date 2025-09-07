@@ -62,7 +62,7 @@ export function CreateTaskForm() {
                 value={taskName}
                 onChange={(e) => setTaskName(e.target.value)}
                 required
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -79,7 +79,7 @@ export function CreateTaskForm() {
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 rows={4}
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -96,7 +96,7 @@ export function CreateTaskForm() {
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
                 required
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
           </FormItem>
@@ -111,7 +111,7 @@ export function CreateTaskForm() {
                 value={priority}
                 onValueChange={setPriority}
               >
-                <SelectTrigger className="bg-[var(--background-alt)] text-[var(--foreground)]">
+                <SelectTrigger className="text-[var(--foreground)]">
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
                 <SelectContent>
@@ -137,7 +137,7 @@ export function CreateTaskForm() {
                 value={assignedTo}
                 onValueChange={setAssignedTo}
               >
-                <SelectTrigger className="bg-[var(--background-alt)] text-[var(--foreground)]">
+                <SelectTrigger className="text-[var(--foreground)]">
                   <SelectValue placeholder="Select a team member" />
                 </SelectTrigger>
                 <SelectContent>
@@ -164,7 +164,7 @@ export function CreateTaskForm() {
                 placeholder="e.g. urgent, bug, ui"
                 value={tags}
                 onChange={(e) => setTags(e.target.value)}
-                className="bg-[var(--background-alt)] text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
+                className="text-[var(--foreground)] placeholder:text-[var(--foreground-alt)]"
               />
             </FormControl>
             <p className="text-sm text-[var(--foreground-alt)] mt-1">

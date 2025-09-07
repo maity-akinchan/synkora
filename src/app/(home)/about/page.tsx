@@ -69,32 +69,41 @@ const AboutPage = () => {
                 </div>
             </section>
 
-
             <section className="max-w-full mx-auto py-20 px-6">
                 <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
-                <div className="h-[100vh]">
-                    <ScrollStack
-                        itemDistance={300}
-                        itemScale={0.05}
-                        itemStackDistance={50}
-                        stackPosition="0%"
-                        scaleEndPosition="5%"
-                        baseScale={0.75}
-                        rotationAmount={0}
-                        blurAmount={1}
-                        onStackComplete={() => console.log("Team stack complete!")}
-                    >
-                        {teamMembers.map((member, index) => (
-                            <ScrollStackItem key={index} itemClassName="flex justify-center">
-                                <div className="flex flex-col items-center w-full h-full">
-                                    <img
-                                        src={member.image}
-                                        className="rounded-2xl shadow-2xl w-full h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] object-cover"
-                                    />
-                                </div>
-                            </ScrollStackItem>
-                        ))}
-                    </ScrollStack>
+                {/* 1. An outer container to define the total scrollable height for the animation.
+       Adjust the height (e.g., h-[300vh]) based on the number of items and itemDistance. */}
+                <div className="relative h-[300vh]">
+
+                    {/* 2. A container that will stick to the top of the viewport.
+       It occupies the full screen height and keeps the ScrollStack visible. */}
+                    <div className="sticky top-8 h-screen">
+
+                        {/* Your original ScrollStack component is placed inside the sticky container. */}
+                        <ScrollStack
+                            itemDistance={300}
+                            itemScale={0.05}
+                            itemStackDistance={50}
+                            stackPosition="0%"
+                            scaleEndPosition="5%"
+                            baseScale={0.75}
+                            rotationAmount={0}
+                            blurAmount={1}
+                            onStackComplete={() => console.log("Team stack complete!")}
+                        >
+                            {teamMembers.map((member, index) => (
+                                <ScrollStackItem key={index} itemClassName="flex justify-center">
+                                    <div className="flex flex-col items-center w-full h-full">
+                                        <img
+                                            src={member.image}
+                                            alt={`Team member ${index + 1}`}
+                                            className="rounded-2xl shadow-2xl w-full h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] object-cover"
+                                        />
+                                    </div>
+                                </ScrollStackItem>
+                            ))}
+                        </ScrollStack>
+                    </div>
                 </div>
             </section>
             <Footer />
