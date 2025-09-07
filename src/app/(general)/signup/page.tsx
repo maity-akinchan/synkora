@@ -1,4 +1,4 @@
-import AuthForm from "@/components/signup/sign-form"
+import AuthForm from "@/components/general/signup/sign-form"
 
 export default function LoginPage() {
     return (

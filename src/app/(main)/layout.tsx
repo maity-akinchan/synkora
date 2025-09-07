@@ -1,9 +1,9 @@
+// app/layout.tsx
+
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/navigation/appSidebar"
-import Navbar from '@/components/navigation/navbar';
-import { verifyToken } from "@/lib/controllers/auth";
+import { MainLayout } from "@/components/main/layout"; // NEW: Import a new client component
+import { Metadata } from "next"; // NEW: Import Metadata type for SEO
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,29 +15,29 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// NEW: Add metadata for SEO and better browser tab information
+export const metadata: Metadata = {
+  title: "App Dashboard",
+  description: "Dashboard for your application.",
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning> {/* Add suppressHydrationWarning for theme providers etc. */}
       <head>
         <meta name="color-scheme" content="light" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased w-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 w-full h-screen antialiased bg-gray-50 text-gray-900`}
       >
-        <div className="md:hidden mb-10 fixed z-10">
-          <Navbar />
-        </div>
-        <div className="w-full">
-          <SidebarProvider>
-            <AppSidebar />
-            {/* <SidebarTrigger className="fixed z-999" /> */}
-                  {children}
-          </SidebarProvider>
-        </div>
+        {/* MODIFIED: Wrap children in the new MainLayout client component */}
+        <MainLayout>
+          {children}
+        </MainLayout>
       </body>
     </html>
   );

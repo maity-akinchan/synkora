@@ -1,7 +1,7 @@
 import ScrollExpandMedia from '@/components/blocks/scroll-expansion-hero';
 import Image from "next/image";
 import { notFound } from "next/navigation";
-import { posts } from "../../../data/posts";
+import { posts } from "../../../(server)/data/posts";
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
     const post = posts.find((p) => p.slug === params.slug);

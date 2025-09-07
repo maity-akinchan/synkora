@@ -23,8 +23,10 @@ type RobotPopupProps = {
 
 export function RobotPopup({ setMarkdown }: RobotPopupProps) {
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
     async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
         e.preventDefault();
+        setLoading(true);
         const formData = new FormData(e.currentTarget);
 
         // Convert FormData to plain object
@@ -45,6 +47,7 @@ export function RobotPopup({ setMarkdown }: RobotPopupProps) {
 
         const body = await response.json();
         setMarkdown(body.output);
+        setLoading(false);
         setIsOpen(false);
     }
     const toggleOpen = () => {
@@ -87,7 +90,7 @@ export function RobotPopup({ setMarkdown }: RobotPopupProps) {
                         <DialogClose asChild>
                             <Button className="bg-green-500" onClick={()=>{setIsOpen(false)}}variant="outline" type="button">Cancel</Button>
                         </DialogClose>
-                        <Button className="bg-green-500" type="submit">Submit</Button>
+                        <Button disabled={loading} type="submit">{loading ? "Loading" : "Submit"}</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>

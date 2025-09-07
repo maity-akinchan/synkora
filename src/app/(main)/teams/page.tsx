@@ -1,4 +1,4 @@
-import ManageTeam from "@/components/teams/Manage";
+import ManageTeam from "@/components/main/teams/Manage";
 
 export default function Page() {
   return <ManageTeam />

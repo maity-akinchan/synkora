@@ -1,14 +1,16 @@
 "use client";
 
-import { Navigation } from "@/components/home/Navigation";
-import { Hero } from "@/components/home/Hero";
-import { CompanyLogos } from "@/components/home/CompanyLogos";
-import { Features } from "@/components/home/Features";
-import { HowItWorks } from "@/components/home/HowItWorks";
-import { Testimonials } from "@/components/home/Testimonials";
-import { FAQ } from "@/components/home/FAQ";
-import { Footer } from "@/components/home/Footer";
+import { Navigation } from "@/components/general/home/Navigation";
+import { Hero } from "@/components/general/home/Hero";
+import { CompanyLogos } from "@/components/general/home/CompanyLogos";
+import { Features } from "@/components/general/home/Features";
+import { HowItWorks } from "@/components/general/home/HowItWorks";
+import { Testimonials } from "@/components/general/home/Testimonials";
+import { FAQ } from "@/components/general/home/FAQ";
+import { Footer } from "@/components/general/home/Footer";
 import { useEffect } from "react";
+import { SelectSeparator } from "@radix-ui/react-select";
+import { time } from "console";
 
 const Home = () => {
   useEffect(() => {
@@ -31,7 +33,6 @@ const Home = () => {
       elements.forEach((el) => observer.unobserve(el));
     };
   }, []);
-
   return (
     <div className="min-h-screen bg-background text-foreground">
       <Navigation />
