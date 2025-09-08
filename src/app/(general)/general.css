@@ -4,7 +4,7 @@
   color-scheme: light dark;
 
   /* Base */
-  --background: light-dark(#ffffff, #171717);
+  --background: light-dark(#fffefe, #000000);
   --foreground: light-dark(#171717, #ffffff);
 
   /* Brand Colors */
@@ -31,7 +31,7 @@
   --color-foreground-light: #ffffff;
 
   /* Neutral / Muted */
-  --muted: light-dark(#f3f4f6, #262626);
+  --muted: light-dark(#ffffff, #262626);
   --muted-foreground: light-dark(#6b7280, #9ca3af);
 
   /* Borders */

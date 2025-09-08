@@ -58,7 +58,7 @@ export const Features = () => {
         {/* Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <Card 
+            <Card
               key={feature.title}
               className="bg-gradient-card border-border hover:border-primary/50 transition-all duration-300 hover:shadow-card group animate-slide-up"
               style={{ animationDelay: `${index * 100}ms` }}

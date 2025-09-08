@@ -17,8 +17,6 @@ const AboutPage = () => {
         <div className="bg-black text-white">
             <Navigation />
 
-            {/* Hero Section */}
-
             <section className="relative w-full min-h-screen flex items-center justify-center overflow-hidden">
                 <img
                     src="/abouthero.svg"

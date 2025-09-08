@@ -12,7 +12,7 @@
   --background-salt: light-dark(#f9f9f9, #0a0a0a);
   --foreground: light-dark(#1f2937, #f4f4f5);
   --foreground-alt: light-dark(#e5e7eb, #d1d5db);
- 
+
   /* Brand Colors */
   --primary: #15a148;
   --secondary: #3b5998;
@@ -34,7 +34,7 @@
   --color-danger: #b91c1c;
   --color-danger-hover: #991b1b;
 
-  --color-foreground-light: #ffffff;
+  --color-foreground-light: #000000;
   --color-primary-light: #34d399;
   --color-primary-dark: #065f46;
   --color-secondary-light: #4c6ef5;
