@@ -42,7 +42,7 @@ const AboutPage = () => {
 
                 <div className="flex justify-center">
                     <img
-                        src="/mission-image.jpg"
+                        src="/mission.jpg"
                         alt="Our Mission"
                         className="rounded-xl shadow-lg w-full max-w-md object-cover"
                     />
@@ -52,7 +52,7 @@ const AboutPage = () => {
             <section className="max-w-6xl mx-auto py-20 px-6 grid md:grid-cols-2 gap-12 items-center">
                 <div className="flex justify-center order-2 md:order-1">
                     <img
-                        src="/vision-image.jpg"
+                        src="/vision.jpg"
                         alt="Our Vision"
                         className="rounded-xl shadow-lg w-full max-w-md object-cover"
                     />
@@ -71,12 +71,10 @@ const AboutPage = () => {
 
             <section className="max-w-full mx-auto py-20 px-6">
                 <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
-                {/* 1. An outer container to define the total scrollable height for the animation.
-       Adjust the height (e.g., h-[300vh]) based on the number of items and itemDistance. */}
+
                 <div className="relative h-[300vh]">
 
-                    {/* 2. A container that will stick to the top of the viewport.
-       It occupies the full screen height and keeps the ScrollStack visible. */}
+
                     <div className="sticky top-8 h-screen">
 
                         {/* Your original ScrollStack component is placed inside the sticky container. */}

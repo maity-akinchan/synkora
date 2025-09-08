@@ -4,6 +4,7 @@ type HeaderProps = {
   onMenuClick: () => void;
 };
 
+
 export default function Header({ onMenuClick }: HeaderProps) {
   return (
     <header className="sticky top-0 z-30 flex h-14 items-center gap-4 border-b bg-background px-4 sm:static sm:h-auto sm:border-0 sm:bg-transparent sm:px-6 py-4">
@@ -14,7 +15,7 @@ export default function Header({ onMenuClick }: HeaderProps) {
       >
         <Menu className="h-6 w-6" />
       </button>
-      
+
       <div className="flex-1">
         {/* You can add a Search bar or breadcrumbs here */}
       </div>
