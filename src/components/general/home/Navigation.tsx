@@ -24,16 +24,22 @@ export const Navigation = ({ className }: NavigationProps) => {
 
           {/* Navigation Links */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/" className="text-muted-foreground hover:text-foreground transition-colors">
+              Home
+            </a>
+            <a href="/about" className="text-muted-foreground hover:text-foreground transition-colors">
+              About
+            </a>
+            <a href="/#features" className="text-muted-foreground hover:text-foreground transition-colors">
               Features
             </a>
-            <a href="#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
               How it works
             </a>
-            <a href="#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/#testimonials" className="text-muted-foreground hover:text-foreground transition-colors">
               Testimonials
             </a>
-            <a href="#faq" className="text-muted-foreground hover:text-foreground transition-colors">
+            <a href="/#faq" className="text-muted-foreground hover:text-foreground transition-colors">
               FAQs
             </a>
             <a href="/blog" className="text-muted-foreground hover:text-foreground transition-colors">
