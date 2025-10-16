@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { PlusCircledIcon } from "@radix-ui/react-icons";
+import { PlusCircle } from 'lucide-react'
 
 export default function Avatars() {
   const uris = [
@@ -20,7 +20,7 @@ export default function Avatars() {
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
       ))}
-      <PlusCircledIcon className="ml-2 w-6 h-6 text-[var(--foreground-alt)]" /> {/* Reduced size */}
+  <PlusCircle className="ml-2 w-6 h-6 text-[var(--foreground-alt)]" /> {/* Reduced size */}
     </div>
   );
 }

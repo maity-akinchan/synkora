@@ -1,7 +1,7 @@
-import Button from "@/components/main/button";
-import { IconFilter, IconSortDescending } from "@tabler/icons-react";
-import { ProjectCardsLoader } from "@/components/main/projects/card";
-import { CreateProjectPage } from "@/components/main/projects/new/NewProject";
+import Button from "@/components/shared/Button/IconButton";
+import { Filter, SortDesc } from 'lucide-react'
+import { ProjectCardsLoader } from "@/app/(main)/projects/_components/card";
+import { CreateProjectPage } from "@/app/(main)/projects/_components/NewProject";
 import {backgroundGradientStyle} from "@/lib/commons/styles";
 
 const sampleProjects = [

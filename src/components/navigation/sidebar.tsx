@@ -1,8 +1,7 @@
 import React from 'react';
 import Link from "next/link";
 import Image from "next/image"; // Use Next.js Image for optimization
-import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArrowRight } from 'lucide-react';
 import clsx from 'clsx'; // A utility for constructing className strings conditionally
 import { backgroundGradientStyle } from '@/lib/commons/styles';
 // Define a type for a single sidebar item for clarity
@@ -63,7 +62,7 @@ function Sidebar({ items, className, logoSrc, title, tagline }: SidebarProps) {
                                 {item.icon && <span className="mr-3 w-6 text-center">{item.icon}</span>}
                                 <span className='flex-grow'>{item.label}</span>
                                 {item.current && (
-                                    <FontAwesomeIcon icon={faArrowRight} className='w-4 h-4' />
+                                    <ArrowRight className='w-4 h-4' />
                                 )}
                             </Link>
                         </li>

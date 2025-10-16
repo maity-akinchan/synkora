@@ -1,93 +1,120 @@
 'use client';
 
 import { redirect, RedirectType } from 'next/navigation'
+import {getErrorMessage,
+  SetErrorState,
+  SetErrorMessage,
+  Response as SignupResponse,
+  postJson,
+  LoginResponse,
+  
+} from "./requests";
+import { setUserCookies } from '../utils/auth';
+import { sanitizeUser } from '../utils/user';
+import { User } from '@/generated/prisma';
 
-export async function onLogin(e: React.FormEvent<HTMLFormElement>, setErrorState : Function, setErrorMessage : Function, resetForm:  Function) {
-  e.preventDefault();
-  let errorState : number = 1;
-  let errorMessage : string = 'und';
-  const formData = new FormData(e.currentTarget);
-  const username = formData.get('username') as string;
-  const password = formData.get('password') as string;
-  console.log(username, password)
+/**
+ * Handle login form submit. Calls callbacks to set error UI state.
+ */
+export async function onLogin(
+  e: React.FormEvent<HTMLFormElement>,
+  setErrorState: SetErrorState,
+  setErrorMessage: SetErrorMessage,
+) {
+  e.preventDefault()
+
+  const formData = new FormData(e.currentTarget)
+  const username = (formData.get('email') || '').toString().trim()
+  const password = (formData.get('password') || '').toString()
+
+  let errorState = 1
+  let errorMessage = 'Unknown error'
+
+  if (!username || !password) {
+    errorMessage = 'Email and password are required'
+    setErrorState(errorState)
+    setErrorMessage(errorMessage)
+    return
+  }
+
   try {
-    const res = await fetch('/api/auth/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ "username": username, "password": password }),
-    });
+    const { ok, data } = await postJson<LoginResponse>('/api/auth/login', { username, password })
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      errorMessage = errorData.message || 'Login failed'
-      errorState = 1
-      resetForm();
-    }
-
-    const { success, token, user } = await res.json();
-
-    if (success && token && user) {
-      console.log('User logged in:', user);
-      errorMessage = "Success"
-      errorState = 0
+    if (!ok) {
+  errorMessage = (data && (data as LoginResponse).message) || 'Login failed'
     } else {
-      errorMessage = "Server fault!"
-      errorState = 1
-      resetForm();
+      const { success, token, user } = data as LoginResponse
+      if (success && token && user) {
+        errorMessage = 'Success'
+        errorState = 0
+      } else {
+  errorMessage = 'Invalid response from server'
+      }
     }
-  } catch (err: any) {
-    console.log(err.message)
+  } catch (err: unknown) {
+    const msg = getErrorMessage(err)
+    console.error('Login error:', msg)
+    errorMessage = 'Server error'
   } finally {
     setErrorState(errorState)
     setErrorMessage(errorMessage)
-    if (errorMessage == "Success") {
-      redirect("/dashboard", RedirectType.push)
+    if (errorMessage === 'Success') {
+      redirect('/dashboard', RedirectType.push)
     }
   }
 }
-export async function onSignup(e: React.FormEvent<HTMLFormElement>, setErrorState : Function, setErrorMessage : Function, resetForm: Function) {
-  e.preventDefault();
 
-  const formData = new FormData(e.currentTarget);
-  const username = formData.get('username') as string;
-  const password = formData.get('password') as string;
-  const email = formData.get('email') as string;
-  const name = formData.get('name') as string;
+/**
+ * Handle signup form submit. Calls callbacks to set error UI state.
+ */
+export async function onSignup(
+  e: React.FormEvent<HTMLFormElement>,
+  setErrorState: SetErrorState,
+  setErrorMessage: SetErrorMessage,
+) {
+  e.preventDefault()
 
-  let errorState : number = 1;
-  let errorMessage : string = 'und';
+  const formData = new FormData(e.currentTarget)
+  const hashedPassword = (formData.get('password') || '').toString()
+  const email = (formData.get('email') || '').toString().trim()
+  const firstName = (formData.get('firstName') || '').toString()
+  const lastName = (formData.get('lastName') || '').toString()
+  const fullName = `${firstName.trim()} ${lastName.trim()}`.trim()
+  const username = email
+
+  let errorState = 1
+  let errorMessage = 'Unknown error'
+
+  if (!email || !hashedPassword) {
+    errorMessage = 'Email and password are required'
+    setErrorState(errorState)
+    setErrorMessage(errorMessage)
+    return
+  }
 
   try {
-    const res = await fetch('/api/user', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, name, username, password }),
-    });
+    const { ok, data } = await postJson<SignupResponse>('/api/user', { email, fullName, username, hashedPassword })
 
-    if (!res.ok) {
-      const errorData = await res.json();
-      errorMessage = errorData.message || 'Signup failed'
-      errorState = 1
-    }
-
-    const { success, id } = await res.json();
-
-    if (success && id) {
-      errorMessage = "Success"
-      errorState = 0
+    if (!ok) {
+      errorMessage = (data && (data as SignupResponse).message) || 'Signup failed'
     } else {
-      throw new Error('Invalid response from server');
+      const { success, id } = data as SignupResponse
+      if (success && id) {
+        errorMessage = 'Success'
+        errorState = 0
+      } else {
+        errorMessage = 'Invalid response from server'
+      }
     }
-  } catch (err: any) {
-    console.error('Signup error:', err.message);
-    errorMessage = "Server fault!"
-    errorState = 1
+  } catch (err: unknown) {
+    const msg = getErrorMessage(err)
+    console.error('Signup error:', msg)
+    errorMessage = 'Server error'
   } finally {
     setErrorState(errorState)
     setErrorMessage(errorMessage)
-    if (errorMessage == "Success") {
-      console.log("Redirecting..")
-      resetForm();
+    if (errorMessage === 'Success') {
+      redirect('/userinfo', RedirectType.push)
     }
   }
 }

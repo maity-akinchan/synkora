@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
-import { CaretSortIcon, CheckIcon } from '@radix-ui/react-icons';
+import { ChevronDown, Check } from 'lucide-react';
 
 import { cn } from '@/lib/utils'; // Utility for conditional class names
 import {
@@ -72,7 +72,7 @@ export function MultiSelectCombobox() {
                     onMouseDown={(e) => e.preventDefault()}
                     onClick={() => handleRemove(frameworkValue)}
                   >
-                    <CaretSortIcon className="h-4 w-4 shrink-0 opacity-50" />
+                    <ChevronDown className="h-4 w-4 shrink-0 opacity-50" />
                   </button>
                 </Badge>
               );
@@ -109,7 +109,7 @@ export function MultiSelectCombobox() {
                   className="flex justify-between"
                 >
                   <span>{framework.label}</span>
-                  <CheckIcon
+                  <Check
                     className={cn(
                       'ml-auto h-4 w-4',
                       selectedFrameworks.includes(framework.value)

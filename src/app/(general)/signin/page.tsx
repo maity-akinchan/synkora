@@ -1,6 +1,6 @@
 'use client';
 
-import SignInForm from "@/components/signin/signin-form"
+import SignInForm from "@/components/general/signin/signin-form"
 
 export default function SignIn() {
     return (

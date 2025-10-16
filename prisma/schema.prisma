@@ -1,3 +1,5 @@
+// This is your Prisma schema file, adapted for SQL Server.
+
 generator client {
   provider        = "prisma-client-js"
   output          = "../src/generated/prisma"
@@ -9,17 +11,263 @@ datasource db {
   url      = env("AZURESQL_URL")
 }
 
+// =====================================
+// Authentication & Core Models
+// =====================================
+
 model User {
-  id        String   @id @default(dbgenerated("newid()"), map: "DF_User_id") @db.UniqueIdentifier
-  name      String   @db.NVarChar(200)
-  username  String   @unique @db.NVarChar(100)
-  email     String   @unique @db.NVarChar(255)
-  password  String   @db.NVarChar(255)
-  avatar    String   @db.NVarChar(255)
-  createdAt DateTime @default(dbgenerated("sysutcdatetime()"), map: "DF_User_createdAt")
-  updatedAt DateTime @default(dbgenerated("sysutcdatetime()"), map: "DF_User_updatedAt") @updatedAt
+  id              Int      @id @default(autoincrement())
+  fullName        String   @db.NVarChar(100)
+  username        String   @unique(map: "UQ_User_username") @db.NVarChar(50)
+  email           String   @unique(map: "UQ_User_email") @db.NVarChar(150)
+  hashedPassword  String   @db.NVarChar(255)
+  avatarUrl       String?  @db.NVarChar(255)
+  jobRole         String?  @db.NVarChar(100)
+  companyName     String?  @db.NVarChar(255)
+  dateOfBirth     DateTime? @db.Date
+  bio             String?  @db.NVarChar(500)
+  referral        String?  @db.NVarChar(50)
+  goals           String?  @db.NVarChar(500)
+  createdAt       DateTime @default(dbgenerated("sysutcdatetime()"))
+  updatedAt       DateTime @updatedAt
+
+  socialLinks     SocialLinks?
+  skills          UserSkill[]
+  teams           TeamMember[]
+  ownedProjects   Project[]        @relation("ProjectOwner")
+  createdTasks    Task[]           @relation("TaskCreator")
+  createdDesigns  Design[]
+  createdTemplates DesignTemplate[]
+  comments        DesignComment[]
+  activityLogs    ActivityLog[]
 
   @@index([email], map: "idx_user_email")
   @@index([username], map: "idx_user_username")
 }
 
+model SocialLinks {
+  id        Int     @id @default(autoincrement())
+  linkedin  String? @db.NVarChar(100)
+  github    String? @db.NVarChar(100)
+  portfolio String? @db.NVarChar(100)
+  userId    Int     @unique
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Skill {
+  id   Int    @id @default(autoincrement())
+  name String @unique(map: "UQ_Skill_name") @db.NVarChar(100)
+
+  users UserSkill[]
+
+  @@map("Skills")
+}
+
+model UserSkill {
+  userId  Int
+  skillId Int
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  skill Skill @relation(fields: [skillId], references: [id], onDelete: Cascade)
+
+  @@id([userId, skillId])
+  @@map("UserSkills")
+}
+
+// =====================================
+// Team & Project Models
+// =====================================
+
+model Team {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.NVarChar(30)
+  logoUrl   String   @db.NVarChar(255)
+  createdAt DateTime @default(dbgenerated("sysutcdatetime()"))
+
+  members      TeamMember[]
+  projects     Project[]
+  activityLogs ActivityLog[]
+}
+
+model TeamRole {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.NVarChar(20)
+
+  members           TeamMember[]
+  projectPermissions ResourcePermission[]
+}
+
+model TeamMember {
+  id       Int      @id @default(autoincrement())
+  teamId   Int
+  userId   Int
+  roleId   Int
+  joinedAt DateTime @default(dbgenerated("sysutcdatetime()"))
+
+  team  Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  user  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role  TeamRole @relation(fields: [roleId], references: [id])
+  assignedTasks Task[]
+  designViews   DesignViewers[]
+
+  @@unique([teamId, userId])
+  @@index([teamId])
+  @@index([userId])
+}
+
+model Project {
+  id          Int       @id @default(autoincrement())
+  name        String    @db.NVarChar(200)
+  description String?   @db.NVarChar(1000)
+  createdAt   DateTime  @default(dbgenerated("sysutcdatetime()"))
+  updatedAt   DateTime  @updatedAt
+  teamId      Int
+  ownerId     Int?
+
+  // ✅ **THE CRITICAL FIX**
+  // Using `onDelete: NoAction` prevents a Team deletion from cascading to its Projects.
+  // This breaks the cyclic dependency that was causing all validation errors.
+  team         Team                 @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: Cascade)
+
+  // Refined for "soft delete" logic. If a User is never deleted, we don't need SetNull.
+  owner        User?                @relation("ProjectOwner", fields: [ownerId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  
+  designs      Design[]
+  tasks        Task[]
+  permissions  ResourcePermission[]
+  activityLogs ActivityLog[]
+
+  @@index([teamId])
+}
+
+// =====================================
+// Project Entity Models (Designs, Tasks, etc.)
+// =====================================
+
+model DesignType {
+  id   Int    @id @default(autoincrement())
+  name String @unique @db.NVarChar(20)
+
+  designs   Design[]
+  templates DesignTemplate[]
+}
+
+model Design {
+  id           Int       @id @default(autoincrement())
+  name         String    @db.NVarChar(50)
+  designTypeId Int
+  createdAt    DateTime  @default(dbgenerated("sysutcdatetime()"))
+  updatedAt    DateTime  @updatedAt
+  projectId    Int
+  createdById  Int?
+
+  project   Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  // Refined for "soft delete" logic.
+  creator   User?         @relation(fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  type      DesignType    @relation(fields: [designTypeId], references: [id])
+  data      DesignData?
+  viewers   DesignViewers[]
+  comments  DesignComment[]
+
+  @@index([projectId])
+}
+
+model DesignData {
+  id         Int      @id @default(autoincrement())
+  contentUrl String   @db.NVarChar(1024)
+  savedAt    DateTime @default(dbgenerated("sysutcdatetime()"))
+  designId   Int      @unique
+
+  design Design @relation(fields: [designId], references: [id], onDelete: Cascade)
+}
+
+model DesignViewers {
+  designId      Int
+  memberId      Int
+  hasViewed     Boolean  @default(false)
+  firstViewedAt DateTime?
+  lastViewedAt  DateTime?
+
+  design Design     @relation(fields: [designId], references: [id], onDelete: Cascade)
+  member TeamMember @relation(fields: [memberId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@id([designId, memberId])
+}
+
+model DesignTemplate {
+  id           Int      @id @default(autoincrement())
+  designTypeId Int
+  name         String   @db.NVarChar(200)
+  usageCount   Int      @default(0)
+  createdAt    DateTime @default(dbgenerated("sysutcdatetime()"))
+  authorId     Int?
+
+  // Refined for "soft delete" logic.
+  author User?      @relation(fields: [authorId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  type   DesignType @relation(fields: [designTypeId], references: [id])
+}
+
+model DesignComment {
+  id        Int      @id @default(autoincrement())
+  content   String   @db.NVarChar(1000)
+  createdAt DateTime @default(dbgenerated("sysutcdatetime()"))
+  designId  Int
+  userId    Int
+
+  design Design @relation(fields: [designId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Task {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.NVarChar(200)
+  description String?  @db.NVarChar(1000)
+  priority    String
+  status      String
+  deadline    DateTime?
+  createdAt   DateTime @default(dbgenerated("sysutcdatetime()"))
+  updatedAt   DateTime @updatedAt
+  projectId   Int
+  createdById Int?
+  assigneeId  Int?
+
+  project  Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  // Refined for "soft delete" logic.
+  creator  User?       @relation("TaskCreator", fields: [createdById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  assignee TeamMember? @relation(fields: [assigneeId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([projectId])
+}
+
+// =====================================
+// Utility & Permissions Models
+// =====================================
+
+model ActivityLog {
+  id                  Int      @id @default(autoincrement())
+  action              String   @db.NVarChar(50)
+  timestamp           DateTime @default(dbgenerated("sysutcdatetime()"))
+  userId              Int?
+  teamId              Int?
+  projectId           Int?
+  relatedResourceId   Int?
+  relatedResourceType String?
+
+  // Refined for "soft delete" logic and to prevent cycles.
+  user    User?    @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  team    Team?    @relation(fields: [teamId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  project Project? @relation(fields: [projectId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model ResourcePermission {
+  id              Int    @id @default(autoincrement())
+  roleId          Int
+  projectId       Int
+  permissionLevel String
+
+  role    TeamRole @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  project Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([roleId, projectId])
+}

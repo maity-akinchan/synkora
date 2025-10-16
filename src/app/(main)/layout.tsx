@@ -2,7 +2,7 @@
 
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { MainLayout } from "@/components/main/layout"; // NEW: Import a new client component
+import { MainLayout } from "@/components/shared/Layout/MainLayout"; // NEW: Import a new client component
 import { Metadata } from "next"; // NEW: Import Metadata type for SEO
 
 const geistSans = Geist({

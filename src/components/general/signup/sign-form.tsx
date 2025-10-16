@@ -7,17 +7,17 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import {onSignup} from "@/lib/commons/auth";
+
 export default function AuthForm() {
     const [show, setShow] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
 
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-        }, 800)
+        const nullfunc = () => {console.log("xD")}
+        onSignup(e, nullfunc, nullfunc, nullfunc)
     }
 
 
@@ -121,7 +121,7 @@ export default function AuthForm() {
                     disabled={loading}
                     className="mt-2 w-full justify-center rounded-xl bg-white text-black hover:bg-white/90"
                 >
-                    {loading ? "Signing up..." : <Link href="/dashboard">Sign Up</Link>}
+                    {loading ? "Signing up..." : <Button type="submit">Sign Up</Button>}
                 </Button>
 
                 <p className="text-center text-sm text-white/60">

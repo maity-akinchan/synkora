@@ -7,8 +7,7 @@ import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBold, faItalic, faStrikethrough, faImage, faPlus, faMinus, faFilePdf, faRobot } from "@fortawesome/free-solid-svg-icons";
+// Replaced FontAwesome icons with simple text/buttons for toolbar to reduce dependency
 
 import {
   ResizableHandle,
@@ -95,14 +94,10 @@ const [showImagePopup, setShowImagePopup] = useState(false);
         >
           <ResizablePanel id="code-panel" className="border-2 border-gray-800" defaultSize={50} minSize={40}>
             <div className="flex gap-8 items-center py-2 justify-center bg-black/90 text-white">
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faBold} onClick={() => handleTextToggle("**", 2)}/>
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faItalic} onClick={() => handleTextToggle("*", 1)} />
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faStrikethrough} onClick={() => handleTextToggle("~", 1)} />
-                 <FontAwesomeIcon
-    className="hover:text-gray-500 hover:cursor-pointer text-sm"
-    icon={faImage}
-    onClick={() => setShowImagePopup(true)}
-  />
+              <button aria-label="Bold" title="Bold" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("**", 2)}>B</button>
+              <button aria-label="Italic" title="Italic" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("*", 1)}>I</button>
+              <button aria-label="Strikethrough" title="Strikethrough" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("~", 1)}>S</button>
+              <button aria-label="Insert Image" title="Insert Image" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setShowImagePopup(true)}>Image</button>
                <ImagePopup
             open={showImagePopup}
             onOpenChange={setShowImagePopup}
@@ -111,8 +106,8 @@ const [showImagePopup, setShowImagePopup] = useState(false);
 
 
               <i className="text-gray-600">|</i>
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faPlus} onClick={() => setFontSize((size) => size + 1)}/>
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer text-sm" icon={faMinus}  onClick={() => setFontSize((size) => Math.max(8, size - 1))} />
+              <button aria-label="Increase Font" title="Increase Font" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setFontSize((size) => size + 1)}>+</button>
+              <button aria-label="Decrease Font" title="Decrease Font" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setFontSize((size) => Math.max(8, size - 1))}>-</button>
             </div>
 
             <AceEditor
@@ -135,7 +130,7 @@ const [showImagePopup, setShowImagePopup] = useState(false);
           <ResizablePanel className="border-2 border-gray-800" defaultSize={50} maxSize={60} minSize={40}>
             <div className="flex gap-8 items-center py-2 px-4 justify-end bg-black/90 text-white">
               <RobotPopup setMarkdown={setMdText}></RobotPopup>
-              <FontAwesomeIcon className="hover:text-gray-500 hover:cursor-pointer" icon={faFilePdf} />
+              <button aria-label="Export PDF" title="Export PDF" className="hover:text-gray-500 hover:cursor-pointer">PDF</button>
             </div>
             
             {/* <div className="p-10 overflow-auto h-[90%]">

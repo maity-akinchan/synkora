@@ -1,6 +1,5 @@
 "use client";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRobot } from "@fortawesome/free-solid-svg-icons";
+import { Robot } from 'lucide-react';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -58,13 +57,11 @@ export function RobotPopup({ setMarkdown }: RobotPopupProps) {
     return (
         <span onClick={toggleOpen}>
         <Dialog open={isOpen}>
-            <DialogTrigger asChild>
-                <FontAwesomeIcon
-                    className="hover:text-gray-500 hover:cursor-pointer"
-                    icon={faRobot}
-                    size="lg"
-                />
-            </DialogTrigger>
+                <DialogTrigger asChild>
+                    <Button variant="outline" className="hover:text-gray-500 hover:cursor-pointer">
+                        <Robot />
+                    </Button>
+                </DialogTrigger>
 
             <DialogContent className="sm:max-w-[425px]">
                 <form onSubmit={handleSubmit}>

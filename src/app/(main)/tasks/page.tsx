@@ -1,6 +1,6 @@
-import TasksList from "@/components/main/tasks/tasksData";
-import AdminTasks from "@/components/main/tasks/adminTasks";
-import {CreateTaskForm} from "@/components/main/tasks/manage/taskForm";
+import TasksList from "@/app/(main)/tasks/_components/tasksData";
+import AdminTasks from "@/app/(main)/tasks/_components/adminTasks";
+import {CreateTaskForm} from "@/app/(main)/tasks/_components/manage/taskForm";
 import data from "./data.json";
 import { backgroundGradientStyle } from "@/lib/commons/styles";
 

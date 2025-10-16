@@ -8,19 +8,20 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import {onLogin} from "@/lib/commons/auth"
 
 export default function SignInForm() {
     const [show, setShow] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
     const router = useRouter()
 
-    const onSubmit = (e: React.FormEvent) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        setTimeout(() => {
-            setLoading(false)
-            router.push("/dashboard")
-        }, 800)
+        const nullfunc = () => {
+            console.log("xD");
+        }
+        await onLogin(e, nullfunc, nullfunc, nullfunc);
     }
 
     return (
