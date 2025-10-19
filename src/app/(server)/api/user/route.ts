@@ -11,17 +11,17 @@ import { deleteUserController } from '@/lib/controllers/auth/deleteuser';
 
 // This signup functionality is duplicate and is also provided by `/api/auth/signup`
 export async function POST(req: Request) {
-  signupController(req);
+  return signupController(req);
 }
 
 export async function GET(req: Request) {
-  getUserController(req);
+  return getUserController(req);
 }
 
 export async function PUT(req: Request) {
-  updateUserController(req);
+ return updateUserController(req);
 }
 
 export async function DELETE(req: Request) {
-  deleteUserController(req);
+  return deleteUserController(req);
 }
