@@ -1,5 +1,5 @@
 import Navbar from "@/components/main/dashboard/nav/navbar"
-import MiniNav from "@/components/main/dashboard/nav/mininav"
+import MiniNav, {MiniNavProps} from "@/components/main/dashboard/nav/mininav"
 import { IconFileImport, IconPlus, IconInfoCircle } from "@tabler/icons-react"
 import Card from "@/components/shared/SummaryCard";
 import ButtonIcon from "@/components/shared/Button/IconButton"
@@ -7,6 +7,14 @@ import { Skeleton } from "@/components/ui/skeleton"
 import { RecentMeeting, ScheduleMeeting } from "@/components/main/dashboard/meeting";
 import { ProjectCollaboration } from "@/components/main/dashboard/collaboration-table";
 import { backgroundGradientStyle } from "@/lib/commons/styles";
+import {getDashboardData} from "@/lib/callers/dashboard";
+
+const userProps : MiniNavProps = {
+    name: "Akinchan",
+    role: "Developer",
+    mail: "akinchan@gmail.com"
+}
+
 const sampleProjects = [
   {
     id: 1,
@@ -78,7 +86,7 @@ const scheduledMeetings = [
   { id: 3, time: '07:00 - 08:00 PM', title: 'Optimize Page Load', members: ['https://i.pravatar.cc/150?img=1', 'https://i.pravatar.cc/150?img=2'], memberCount: 14, isFeatured: false },
 ]
 // ...existing code...
-export default function App() {
+export default async function App() {
   return (
     <div className="text-gray-200 min-h-screen font-sans bg-[var(--background)]">
       <div className="flex flex-col lg:flex-row gap-4 max-w-screen-2xl mx-auto w-full h-full">
@@ -129,7 +137,7 @@ export default function App() {
         </div>
         {/* Right Column */}
         <div className="w-full lg:w-[35%] flex flex-col gap-4 min-h-0">
-          <MiniNav />
+          <MiniNav {...userProps} />
           <div className={`flex-1 ${backgroundGradientStyle} rounded-3xl p-4 sm:p-6 min-h-0 overflow-auto`}>
             <h2 className="text-xl font-bold mb-4">Activity Feed</h2>
             <RecentMeeting />
