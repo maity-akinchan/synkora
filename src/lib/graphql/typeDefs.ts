@@ -79,7 +79,7 @@ export const typeDefs = /* GraphQL */ `
     joinedAt: DateTime!
     team: Team!
     user: User!
-    role: TeamRole!
+    role: TeamRole
     assignedTasks: [Task!]!
     designViews: [DesignViewers!]!
   }
