@@ -67,40 +67,38 @@ const AboutPage = () => {
                 </div>
             </section>
 
-            <section className="max-w-full mx-auto py-20 px-6">
+            <section className="max-w-fit mx-auto py-20 px-6">
                 <h2 className="text-3xl font-bold mb-12 text-center">Meet Our Team</h2>
 
-                <div className="relative h-[300vh]">
 
+                <div className="h-screen overflow-y-auto ">
 
-                    <div className="sticky top-8 h-screen">
-
-                        {/* Your original ScrollStack component is placed inside the sticky container. */}
-                        <ScrollStack
-                            itemDistance={300}
-                            itemScale={0.05}
-                            itemStackDistance={50}
-                            stackPosition="0%"
-                            scaleEndPosition="5%"
-                            baseScale={0.75}
-                            rotationAmount={0}
-                            blurAmount={1}
-                            onStackComplete={() => console.log("Team stack complete!")}
-                        >
-                            {teamMembers.map((member, index) => (
-                                <ScrollStackItem key={index} itemClassName="flex justify-center">
-                                    <div className="flex flex-col items-center w-full h-full">
-                                        <img
-                                            src={member.image}
-                                            alt={`Team member ${index + 1}`}
-                                            className="rounded-2xl shadow-2xl w-full h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] object-cover"
-                                        />
-                                    </div>
-                                </ScrollStackItem>
-                            ))}
-                        </ScrollStack>
-                    </div>
+                    {/* Your original ScrollStack component is placed inside the sticky container. */}
+                    <ScrollStack
+                        itemDistance={300}
+                        itemScale={0.05}
+                        itemStackDistance={50}
+                        stackPosition="0%"
+                        scaleEndPosition="5%"
+                        baseScale={0.75}
+                        rotationAmount={0}
+                        blurAmount={1}
+                        onStackComplete={() => console.log("Team stack complete!")}
+                    >
+                        {teamMembers.map((member, index) => (
+                            <ScrollStackItem key={index} itemClassName="flex justify-center">
+                                <div className="flex flex-col items-center w-full h-full">
+                                    <img
+                                        src={member.image}
+                                        alt={`Team member ${index + 1}`}
+                                        className="rounded-2xl shadow-2xl w-full h-[450px] sm:h-[500px] md:h-[550px] lg:h-[600px] object-cover"
+                                    />
+                                </div>
+                            </ScrollStackItem>
+                        ))}
+                    </ScrollStack>
                 </div>
+
             </section>
             <Footer />
 
