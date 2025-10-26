@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { Spinner } from "@/components/ui/spinner"
+import { createDesign } from "@/lib/callers/design";
+import { useRouter } from "next/navigation";
 
 export default function CreatingPage() {
   const [designName, setDesignName] = useState("Untitled Design");
@@ -18,13 +20,24 @@ export default function CreatingPage() {
     "Press 'Ctrl+S' or 'Cmd+S' to save your progress at any time.",
     "Right-click on any element in the Canvas to see more options.",
   ];
-
+  const router = useRouter();
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const name = params.get("design_name") || "Untitled Design";
     const type = params.get("design_type") || "Unknown";
+    const typeId = parseInt(params.get("design_type_id") || "1");
     setDesignName(name);
     setDesignType(type);
+    createDesign({name: name, projectId: 13, designTypeId: typeId, createdById: 1}).then((output) =>{
+      if (output.type.id == 1) {
+        router.push(`/markdown/?${output.id}`)
+      } else if (output.type.id == 2) {
+        router.push(`/excalidraw/?${output.id}`)
+      } else {
+        router.push(`/spreadsheet/?${output.id}`)
+      }
+    })
+
   }, []);
 
   useEffect(() => {

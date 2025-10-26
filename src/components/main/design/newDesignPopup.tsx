@@ -46,11 +46,11 @@ export function NewDesignPopup() {
                     <p className="text-center text-md font-mono">Canvas</p>
                     <IconArtboard size={44} className="m-auto" />
                 </div>
-                <div className={`bg-[var(--${designType == 1 ? 'primary' : 'secondary'})] px-2 py-4 cursor-pointer`} onClick={() => {setDesignType(1)}}>
+                <div className={`bg-[var(--${designType == 2 ? 'primary' : 'secondary'})] px-2 py-4 cursor-pointer`} onClick={() => {setDesignType(2)}}>
                      <p className="text-center text-md font-mono">Markdown</p>
                     <IconMarkdown size={44} className="m-auto" />
                 </div>
-                <div className={`bg-[var(--${designType == 2 ? 'primary' : 'secondary'})] px-2 py-4 cursor-pointer`} onClick={() => {setDesignType(2)}}>
+                <div className={`bg-[var(--${designType == 1 ? 'primary' : 'secondary'})] px-2 py-4 cursor-pointer`} onClick={() => {setDesignType(1)}}>
                     <p className="text-center text-md font-mono">Spreadsheet</p>
                     <IconFileSpreadsheet size={44} className="m-auto" />
                 </div>
