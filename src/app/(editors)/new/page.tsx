@@ -43,14 +43,14 @@ export default function CreatingPage() {
       <div className="flex flex-col items-center justify-center space-y-6 p-8 rounded-lg text-center">
         <Spinner className="size-34 text-green-500" />
 
-        <h1 className="text-2xl font-semibold text-gray-900">
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">
           Hang on, creating your design...
         </h1>
 
-        <p className="text-lg text-gray-500">
-          <span className="font-medium text-gray-700">{designName}</span>
-          <span className="text-gray-400 mx-1">&bull;</span>
-          <span className="font-medium text-gray-700">{designType}</span>
+        <p className="text-lg text-[var(--secondary)]">
+          <span className="font-medium">{designName}</span>
+          <span className="mx-1">&bull;</span>
+          <span className="font-medium">{designType}</span>
         </p>
       </div>
 

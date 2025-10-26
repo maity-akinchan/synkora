@@ -15,7 +15,7 @@
   --background-salt: light-dark(#f9f9f9, #0a0a0a);
   --foreground: light-dark(#1f2937, #f4f4f5);
   --foreground-alt: light-dark(#e5e7eb, #d1d5db);
-
+  --background-excalidraw: light-dark(#ffffff, #121212);
   /* Brand Colors */
   --primary: #15a148;
   --secondary: #3b5998;
@@ -69,6 +69,11 @@
   /* Borders */
   --border: light-dark(#d1d5db, #3f3f46);
   --border-strong: light-dark(#9ca3af, #52525b);
+
+  /* ADDED: Code variables that were missing */
+  --color-code: light-dark(var(--color-accent-dark), var(--color-accent-light));
+  --color-code-bg: light-dark(var(--color-border-light), var(--color-border-dark));
+  --color-code-block-bg: var(--background-salt);
 }
 
 @theme inline {
@@ -92,4 +97,117 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* --- REFINED PROSE STYLES --- */
+
+.prose {
+  color: var(--foreground);
+}
+
+/* Headings: Create a clear hierarchy */
+.prose h1 {
+  color: var(--primary); /* Use brand color for the main heading */
+}
+.prose h2,
+.prose h3 {
+  color: var(--foreground);
+}
+.prose h4,
+.prose h5,
+.prose h6 {
+  color: var(--muted-foreground); /* Use a muted color for less important headings */
+}
+
+/* Body Text & Lists */
+.prose p,
+.prose ul,
+.prose ol,
+.prose li {
+  color: var(--foreground);
+}
+
+/* Bold & Italic Text */
+.prose strong {
+  color: var(--foreground);
+  font-weight: 600; /* Ensure strong text is sufficiently bold */
+}
+.prose em {
+  color: var(--foreground);
+}
+
+/* Links: Add a hover effect */
+.prose a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+.prose a:hover {
+  color: var(--color-primary-hover);
+  text-decoration: underline;
+}
+
+/* Code: Style inline and block-level code differently */
+.prose code {
+  color: var(--color-code);
+  background-color: var(--color-code-bg);
+  padding: 0.2em 0.4em;
+  margin: 0;
+  font-size: 85%;
+  border-radius: 6px;
+}
+.prose pre {
+  color: var(--foreground); /* Use standard text color for readability */
+  background-color: var(--color-code-block-bg);
+  border-left: 4px solid var(--color-primary);
+  padding: 1em;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+.prose pre code {
+  color: inherit; /* Inherit color from the <pre> tag */
+  background-color: transparent; /* No background for code inside a <pre> block */
+  padding: 0;
+  font-size: inherit;
+  border-radius: 0;
+}
+
+/* Blockquotes: Use muted text for quotes */
+.prose blockquote {
+  color: var(--muted-foreground);
+  border-left: 4px solid var(--border); /* Use border color for a more subtle look */
+  padding-left: 1em;
+  margin-left: 0;
+}
+
+/* Horizontal Rule */
+.prose hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--border);
+}
+
+/* Images */
+.prose img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* Add a slight radius to images */
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  color: var(--foreground);
+  border-collapse: collapse;
+}
+.prose th {
+  color: var(--foreground);
+  font-weight: 600;
+  border-bottom: 2px solid var(--border-strong); /* Stronger border for header */
+  padding: 0.5em;
+  text-align: left;
+}
+.prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.5em;
 }
