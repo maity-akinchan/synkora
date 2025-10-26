@@ -2,7 +2,7 @@
 import { createYoga, createSchema } from 'graphql-yoga'
 import { typeDefs } from '@/lib/graphql/typeDefs'
 import { resolvers } from '@/lib/graphql/resolvers'
-import { prisma } from '@/lib/db' // 👈 import your Prisma client
+import { prisma } from '@/lib/db'
 import { NextRequest } from 'next/server'
 
 const yoga = createYoga<{

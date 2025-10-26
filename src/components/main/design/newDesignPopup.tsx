@@ -11,11 +11,11 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { IconArtboard, IconMarkdown, IconFileSpreadsheet } from "@tabler/icons-react"
+import { IconArtboard, IconMarkdown, IconFileSpreadsheet, IconPlus } from "@tabler/icons-react"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 
-export function DialogDemo() {
+export function NewDesignPopup() {
   const [designType, setDesignType] = useState(0);
   const [name, setName] = useState("Untitiled Design")
   const router = useRouter();
@@ -25,9 +25,9 @@ export function DialogDemo() {
   }
   return (
     <Dialog>
-      <form className="bg-[var(--background)]" onSubmit={submitHandler}>
+      <form onSubmit={submitHandler}>
         <DialogTrigger asChild>
-          <Button variant="outline">Open Dialog</Button>
+          <Button variant="outline"><IconPlus size={32}/>Create New Design</Button>
         </DialogTrigger>
         <DialogContent className="sm:max-w-[425px] bg-[var(--background)]">
           <DialogHeader>
