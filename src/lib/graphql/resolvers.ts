@@ -134,6 +134,10 @@ export const resolvers: Resolvers<GraphQLContext> = {
           teamId,
           userId,
           roleId,
+        },
+        include: {
+          team: true,
+          user: true
         }
       });
     },
@@ -146,6 +150,10 @@ export const resolvers: Resolvers<GraphQLContext> = {
           description,
           owner: ownerId ? { connect: { id: ownerId } } : undefined,
           team: { connect: { id: teamId } },
+        },
+         include: {
+          team: true,
+          owner: true
         },
       });
     },
@@ -174,12 +182,18 @@ export const resolvers: Resolvers<GraphQLContext> = {
 
     // --- DESIGN MUTATIONS ---
     createDesign: async (_parent, { name, projectId, designTypeId, createdById }, { prisma }) => {
+      console.log(createdById);
       return prisma.design.create({
         data: {
           name,
           project: { connect: { id: projectId } },
           type: { connect: { id: designTypeId } },
           creator: createdById ? { connect: { id: createdById } } : undefined,
+        },
+        include: {
+          project: true,
+          type: true,
+          creator: true,
         },
       });
     },
@@ -223,6 +237,11 @@ export const resolvers: Resolvers<GraphQLContext> = {
       return prisma.task.update({
         where: { id },
         data: { title, description, status, priority },
+        include: {
+          project: true,
+          creator: true,
+          assignee: true
+        }
       });
     },
     deleteTask: async (_parent, { id }, { prisma }) => {

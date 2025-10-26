@@ -1,5 +1,5 @@
 "use client";
-import { Robot } from 'lucide-react';
+import { Bot } from 'lucide-react';
 
 import { Button } from "@/components/ui/button";
 import {
@@ -59,11 +59,11 @@ export function RobotPopup({ setMarkdown }: RobotPopupProps) {
         <Dialog open={isOpen}>
                 <DialogTrigger asChild>
                     <Button variant="outline" className="hover:text-gray-500 hover:cursor-pointer">
-                        <Robot />
+                        <Bot />
                     </Button>
                 </DialogTrigger>
 
-            <DialogContent className="sm:max-w-[425px]">
+            <DialogContent className="sm:max-w-[425px] bg-[var(--background)]">
                 <form onSubmit={handleSubmit}>
                     <DialogHeader>
                         <DialogTitle>Create using AI!</DialogTitle>
