@@ -49,7 +49,7 @@ export default function ImagePopup ({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-[var(--background)]">
         <DialogHeader>
           <DialogTitle>Add Image</DialogTitle>
         </DialogHeader>

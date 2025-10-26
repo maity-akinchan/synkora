@@ -1,17 +1,40 @@
 'use client';
 
 import { redirect, RedirectType } from 'next/navigation'
-import {getErrorMessage,
-  SetErrorState,
-  SetErrorMessage,
-  Response as SignupResponse,
-  postJson,
-  LoginResponse,
-  
-} from "./requests";
-import { setUserCookies } from '../utils/auth';
-import { sanitizeUser } from '../utils/user';
-import { User } from '@/generated/prisma';
+
+type SetErrorState = (v: number) => void
+type SetErrorMessage = (s: string) => void
+interface LoginResponse {
+  success?: boolean
+  token?: string
+  user?: unknown
+  message?: string
+}
+
+interface SignupResponse {
+  success?: boolean
+  id?: string
+  message?: string
+}
+
+async function postJson<T = unknown>(url: string, body: unknown) {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  })
+
+  const data = await res.json().catch(() => ({}))
+  return { ok: res.ok, status: res.status, data: data as T }
+}
+
+function getErrorMessage(err: unknown): string {
+  if (typeof err === 'object' && err !== null && 'message' in err) {
+    const maybe = err as { message?: unknown }
+    if (typeof maybe.message === 'string') return maybe.message
+  }
+  return String(err)
+}
 
 /**
  * Handle login form submit. Calls callbacks to set error UI state.
@@ -75,17 +98,17 @@ export async function onSignup(
   e.preventDefault()
 
   const formData = new FormData(e.currentTarget)
-  const hashedPassword = (formData.get('password') || '').toString()
+  const password = (formData.get('password') || '').toString()
   const email = (formData.get('email') || '').toString().trim()
   const firstName = (formData.get('firstName') || '').toString()
   const lastName = (formData.get('lastName') || '').toString()
-  const fullName = `${firstName.trim()} ${lastName.trim()}`.trim()
+  const name = `${firstName.trim()} ${lastName.trim()}`.trim()
   const username = email
 
   let errorState = 1
   let errorMessage = 'Unknown error'
 
-  if (!email || !hashedPassword) {
+  if (!email || !password) {
     errorMessage = 'Email and password are required'
     setErrorState(errorState)
     setErrorMessage(errorMessage)
@@ -93,7 +116,7 @@ export async function onSignup(
   }
 
   try {
-    const { ok, data } = await postJson<SignupResponse>('/api/user', { email, fullName, username, hashedPassword })
+    const { ok, data } = await postJson<SignupResponse>('/api/user', { email, name, username, password })
 
     if (!ok) {
       errorMessage = (data && (data as SignupResponse).message) || 'Signup failed'
@@ -114,7 +137,7 @@ export async function onSignup(
     setErrorState(errorState)
     setErrorMessage(errorMessage)
     if (errorMessage === 'Success') {
-      redirect('/userinfo', RedirectType.push)
+      redirect('/dashboard', RedirectType.push)
     }
   }
 }
