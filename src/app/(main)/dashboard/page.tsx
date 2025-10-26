@@ -1,142 +1,228 @@
-import Navbar from "@/components/main/dashboard/nav/navbar"
-import MiniNav from "@/components/main/dashboard/nav/mininav"
-import { IconFileImport, IconPlus, IconInfoCircle } from "@tabler/icons-react"
-import Card from "@/components/shared/SummaryCard";
-import ButtonIcon from "@/components/shared/Button/IconButton"
-import { Skeleton } from "@/components/ui/skeleton"
-import { RecentMeeting, ScheduleMeeting } from "@/components/main/dashboard/meeting";
-import { ProjectCollaboration } from "@/components/main/dashboard/collaboration-table";
-import { backgroundGradientStyle } from "@/lib/commons/styles";
-const sampleProjects = [
-  {
-    id: 1,
-    name: 'Dashboard UI',
-    author: {
-      name: "Alice Nguyen"
-    },
-    members: [
-      'https://i.pravatar.cc/150?img=1',
-      'https://i.pravatar.cc/150?img=2',
-      'https://i.pravatar.cc/150?img=3',
-    ],
-    progress: 100,
-    status: 0,
-    date: "2025-08-12",
-    timeSpent: 120
-  },
-  {
-    id: 2,
-    name: 'API Integration',
-    author: {
-      name: "Carlos Ramirez"
-    },
-    members: [
-      'https://i.pravatar.cc/150?img=4',
-      'https://i.pravatar.cc/150?img=5',
-    ],
-    progress: 45,
-    status: 1,
-    date: "2025-08-18",
-    timeSpent: 65
-  },
-  {
-    id: 3,
-    name: 'Mobile Design',
-    author: {
-      name: "Fatima Zahra"
-    },
-    members: [
-      'https://i.pravatar.cc/150?img=6',
-      'https://i.pravatar.cc/150?img=7',
-      'https://i.pravatar.cc/150?img=8',
-      'https://i.pravatar.cc/150?img=9',
-    ],
-    progress: 78,
-    status: 2,
-    date: "2025-09-01",
-    timeSpent: 90
-  },
-  {
-    id: 4,
-    name: 'Marketing Plan',
-    author: {
-      name: "David Kim"
-    },
-    members: [
-      'https://i.pravatar.cc/150?img=10',
-      'https://i.pravatar.cc/150?img=11',
-    ],
-    progress: 0,
-    status: 1,
-    date: "2025-09-05",
-    timeSpent: 0
-  },
-];
-const scheduledMeetings = [
-  { id: 1, time: '03:00 - 04:30 PM', title: 'Residential Onboarding', members: ['https://i.pravatar.cc/150?img=12', 'https://i.pravatar.cc/150?img=13'], memberCount: 12, isFeatured: true },
-  { id: 2, time: '05:00 - 06:00 PM', title: 'Build Dashboard', members: ['https://i.pravatar.cc/150?img=14', 'https://i.pravatar.cc/150?img=15'], memberCount: 8, isFeatured: false },
-  { id: 3, time: '07:00 - 08:00 PM', title: 'Optimize Page Load', members: ['https://i.pravatar.cc/150?img=1', 'https://i.pravatar.cc/150?img=2'], memberCount: 14, isFeatured: false },
-]
-// ...existing code...
-export default function App() {
-  return (
-    <div className="text-gray-200 min-h-screen font-sans bg-[var(--background)]">
-      <div className="flex flex-col lg:flex-row gap-4 max-w-screen-2xl mx-auto w-full h-full">
-        {/* Left Column */}
-        <div className="w-full lg:w-[65%] flex flex-col gap-4 min-h-0">
-          <Navbar />
-          <div className={`flex-1 ${backgroundGradientStyle} rounded-3xl overflow-auto min-h-0`}>
-            <div className="flex flex-col gap-y-4 p-4 sm:p-6">
-              <div className="flex flex-col md:flex-row items-start md:items-center gap-3 justify-between">
-                <div className="flex-grow">
-                  <h1 className="text-2xl font-bold text-[var(--foreground)]">Dashboard</h1>
-                  <p className="w-full text-md font-light text-[var(--foreground-alt)]">Hello John, Welcome to task management!</p>
+import CreateProjectModal from "@/components/create-project-modal";
+import { ProjectCard } from "@/components/project-card";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+
+export default async function DashboardPage({
+    searchParams,
+}: {
+    searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+    // --- Mock session ---
+    const session = {
+        user: {
+            id: "user_123",
+            name: "John Doe",
+            email: "john@example.com",
+            image: "https://i.pravatar.cc/150?img=3",
+        },
+    };
+
+    // --- Mock data ---
+    const projects = [
+        {
+            id: "p1",
+            name: "Synkora",
+            description: "Collaborative project management platform",
+            createdAt: new Date("2025-05-10"),
+            members: [
+                {
+                    user: {
+                        id: "user_123",
+                        name: "John Doe",
+                        email: "john@example.com",
+                        image: "https://i.pravatar.cc/150?img=3",
+                    },
+                    role: "admin",
+                },
+            ],
+        },
+        {
+            id: "p2",
+            name: "OrbitalEye",
+            description: "AI-powered space monitoring system",
+            createdAt: new Date("2025-06-15"),
+            members: [
+                {
+                    user: {
+                        id: "user_123",
+                        name: "John Doe",
+                        email: "john@example.com",
+                        image: "https://i.pravatar.cc/150?img=3",
+                    },
+                    role: "member",
+                },
+            ],
+        },
+    ];
+
+    const invitations = [
+        {
+            id: "inv1",
+            token: "abc123",
+            project: {
+                name: "NeuroDash",
+                description: "AI dashboard for neural network metrics",
+            },
+        },
+    ];
+
+    // --- Handle query params (mock) ---
+    const sp = await searchParams;
+    const errorRaw = sp?.inviteError;
+    const successRaw = sp?.inviteSuccess;
+    const errorKey = (Array.isArray(errorRaw) ? errorRaw[0] : errorRaw) || "";
+    const successKey = (Array.isArray(successRaw) ? successRaw[0] : successRaw) || "";
+
+    const errorMessage =
+        errorKey === "missing_token"
+            ? "Invitation token is missing."
+            : errorKey === "invalid_or_expired"
+                ? "This invitation is invalid or has expired."
+                : errorKey === "email_mismatch"
+                    ? "This invitation is for a different email address."
+                    : "";
+
+    const successMessage =
+        successKey === "accepted"
+            ? "Invitation accepted. You've been added to the project."
+            : "";
+
+    // --- Render ---
+    return (
+        <main
+            className="container mx-auto max-w-7xl px-4 py-10"
+            style={{
+                background: "var(--background)",
+                color: "var(--foreground)",
+            }}
+        >
+            <div className="flex items-end justify-between gap-4">
+                <div>
+                    <h1
+                        className="text-3xl font-bold tracking-tight"
+                        style={{ color: "var(--color-primary)" }}
+                    >
+                        Dashboard
+                    </h1>
+                    <p
+                        className="mt-2"
+                        style={{ color: "var(--muted-foreground)" }}
+                    >
+                        Your projects
+                    </p>
                 </div>
-                <div className="flex items-center gap-3 w-full md:w-auto">
-                  <ButtonIcon text={"Import Data"} Icon={IconFileImport} />
-                  <ButtonIcon text={"Add Project"} Icon={IconPlus} />
+
+                {/* Feedback for invitation accept flows */}
+                <div className="w-full">
+                    {errorMessage ? (
+                        <div className="mt-4">
+                            <Alert
+                                style={{
+                                    borderColor: "var(--color-error)",
+                                    background: "var(--color-error-light)",
+                                    color: "var(--color-error-dark)",
+                                }}
+                            >
+                                <AlertTitle>Invitation Error</AlertTitle>
+                                <AlertDescription>{errorMessage}</AlertDescription>
+                            </Alert>
+                        </div>
+                    ) : null}
+                    {successMessage ? (
+                        <div className="mt-4">
+                            <Alert
+                                style={{
+                                    borderColor: "var(--color-success)",
+                                    background: "var(--color-success-light)",
+                                    color: "var(--color-success-dark)",
+                                }}
+                            >
+                                <AlertTitle>Success</AlertTitle>
+                                <AlertDescription>{successMessage}</AlertDescription>
+                            </Alert>
+                        </div>
+                    ) : null}
                 </div>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <Card heading="Total Projects" para="12 Active" checked={false} />
-                <Card heading="Tasks Completed" para="89 this month" checked={false} />
-                <Card heading="Team Members" para="4 Online" checked={false} />
-                <Card heading="Pending Issues" para="3 Urgent" checked={false} />
-              </div>
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
-                <div className="p-4 col-span-1 lg:col-span-2 rounded-xl bg-[var(--background)] min-h-[140px] flex flex-col justify-between">
-                  <div className="flex items-center justify-between mb-3">
-                    <div>
-                      <h1 className="text-lg font-bold">Project Analytics</h1>
-                      <p className="w-full text-sm font-light text-[var(--foreground-alt)]">Updated 1 day ago.</p>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <div className="w-32"><ButtonIcon text={"Add Task"} Icon={IconPlus} /></div>
-                      <IconInfoCircle className="text-[var(--foreground-alt)] cursor-pointer" />
-                    </div>
-                  </div>
-                  <Skeleton className="bg-white h-[120px] w-full" />
-                </div>
-                <div className="p-3 bg-[var(--background)] rounded-xl min-h-[140px] flex items-center">
-                  <Skeleton className="bg-white h-full w-full" />
-                </div>
-              </div>
-              <div>
-                <ProjectCollaboration projects={sampleProjects} />
-              </div>
             </div>
-          </div>
-        </div>
-        {/* Right Column */}
-        <div className="w-full lg:w-[35%] flex flex-col gap-4 min-h-0">
-          <MiniNav name={"John Does Noting"} role={"Tester"} mail="contact@jodoe.joe" />
-          <div className={`flex-1 ${backgroundGradientStyle} rounded-3xl p-4 sm:p-6 min-h-0 overflow-auto`}>
-            <h2 className="text-xl font-bold mb-4">Activity Feed</h2>
-            <RecentMeeting />
-            <ScheduleMeeting scheduledMeetings={scheduledMeetings} />
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+
+            {/* Invitations */}
+            {invitations.length > 0 && (
+                <div
+                    className="mt-8 rounded-lg border p-5"
+                    style={{
+                        borderColor: "var(--color-border)",
+                        background: "var(--muted)",
+                        color: "var(--foreground)",
+                    }}
+                >
+                    <h2
+                        className="text-lg font-semibold"
+                        style={{ color: "var(--color-primary)" }}
+                    >
+                        Pending invitations
+                    </h2>
+                    <ul className="mt-3 space-y-3">
+                        {invitations.map((inv) => (
+                            <li
+                                key={inv.id}
+                                className="flex items-center justify-between"
+                            >
+                                <div>
+                                    <div className="font-medium">{inv.project.name}</div>
+                                    <div
+                                        className="text-xs"
+                                        style={{ color: "var(--muted-foreground)" }}
+                                    >
+                                        {inv.project.description}
+                                    </div>
+                                </div>
+                                <a
+                                    href={`/invitations/accept?token=${encodeURIComponent(inv.token)}`}
+                                    className="text-sm font-medium underline"
+                                    style={{ color: "var(--color-primary)" }}
+                                >
+                                    Accept
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
+
+            {/* Projects */}
+            {projects.length === 0 ? (
+                <div
+                    className="mt-10 rounded-lg border p-10 text-center"
+                    style={{
+                        borderColor: "var(--color-border)",
+                        color: "var(--muted-foreground)",
+                    }}
+                >
+                    You have no projects yet. Click the + button to create one.
+                </div>
+            ) : (
+                <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                    {projects.map((p) => {
+                        const me = p.members.find((m) => m.user.id === session.user.id);
+                        const canAdmin = me?.role === "admin";
+                        return (
+                            <ProjectCard
+                                key={p.id}
+                                project={{
+                                    id: p.id,
+                                    name: p.name,
+                                    description: p.description,
+                                    createdAt: p.createdAt,
+                                    members: p.members,
+                                }}
+                                canAdmin={!!canAdmin}
+                            />
+                        );
+                    })}
+                </div>
+            )}
+
+            <CreateProjectModal />
+        </main>
+    );
 }
