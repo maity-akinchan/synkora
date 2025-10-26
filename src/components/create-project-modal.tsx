@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
+import { createTeam } from "@/lib/callers/team";
 
 type Props = {
   onCreated?: () => void;
@@ -17,36 +18,26 @@ export default function CreateProjectModal({ onCreated }: Props) {
   const [submitting, setSubmitting] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!name.trim()) return;
-    setSubmitting(true);
-    try {
-      const res = await fetch("/api/projects", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          description,
-          memberEmails: memberEmails
-            .split(",")
-            .map((s) => s.trim())
-            .filter(Boolean),
-        }),
-      });
-      if (!res.ok) throw new Error("Failed to create project");
-      setOpen(false);
-      setName("");
-      setDescription("");
-      setMemberEmails("");
-      if (onCreated) onCreated();
-      else router.refresh();
-    } catch (err) {
-      console.error(err);
-      alert("Failed to create project");
-    } finally {
-      setSubmitting(false);
-    }
+  e.preventDefault();
+  if (!name.trim()) return;
+
+  setSubmitting(true);
+  try {
+    const response = await createTeam({
+      name: name.trim(),
+      logoUrl: "https://example.com/team-logo.png",
+      ownerId: 13,
+      ownerRoleId: 1,
+    });
+
+    console.log("✅ Team created:", response.data.createTeam);
+  } catch (err) {
+    console.error("❌ Error:", err);
+    alert("Failed to create team");
+  } finally {
+    setSubmitting(false);
   }
+}
 
   return (
     <>
