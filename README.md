@@ -6,4 +6,3 @@ The platform enables seamless real-time communication and task tracking while pr
 
 It integrates features such as network graphs, whiteboards with animation capabilities, and live data fetching from Google Sheets, empowering teams to not only manage their tasks efficiently but also visualize their work and progress in engaging and dynamic ways.
 
-

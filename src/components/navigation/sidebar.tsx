@@ -4,6 +4,10 @@ import Image from "next/image"; // Use Next.js Image for optimization
 import { ArrowRight } from 'lucide-react';
 import clsx from 'clsx'; // A utility for constructing className strings conditionally
 import { backgroundGradientStyle } from '@/lib/commons/styles';
+import { NewDesignPopup } from '../main/design/newDesignPopup';
+import { usePathname } from 'next/navigation'
+import path from 'path';
+
 // Define a type for a single sidebar item for clarity
 export type SidebarItem = {
     label: string;
@@ -22,6 +26,7 @@ export type SidebarProps = {
 };
 
 function Sidebar({ items, className, logoSrc, title, tagline }: SidebarProps) {
+     const pathname = usePathname().split("/")[1];
     return (
         <aside className={clsx('bg-[var(--background-alt)] rounded-r-2xl h-full flex flex-col p-4 shadow-xs shadow-green-500', className + " " + backgroundGradientStyle)}>
             {/* Header section is now a link to the homepage and uses props */}
@@ -68,6 +73,11 @@ function Sidebar({ items, className, logoSrc, title, tagline }: SidebarProps) {
                         </li>
                     ))}
                 </ul>
+                {pathname == "project" &&
+                    <ul className='flex flex-col gap-2 absolute bottom-5'>
+                        <NewDesignPopup />
+                    </ul>
+                }
             </nav>
         </aside>
     );

@@ -6,7 +6,7 @@ import AceEditor from "react-ace";
 import "ace-builds/src-noconflict/mode-markdown";
 import "ace-builds/src-noconflict/theme-tomorrow_night";
 import "ace-builds/src-noconflict/ext-language_tools";
-
+import {useReactToPrint} from 'react-to-print';
 // Replaced FontAwesome icons with simple text/buttons for toolbar to reduce dependency
 
 import {
@@ -28,8 +28,16 @@ This is **bold text** and this is a [link](https://example.com).
 
   const [mdText, setMdText] = useState(initText);
   const [fontSize, setFontSize] = useState(14);
+  const resizableEditorRef = useRef(null);
+  const resizableViewerRef = useRef(null);
+  const contentRef = useRef(null);
 
-  const handleTextToggle = (bounding: String, bs: number) => {
+  const handlePrint = useReactToPrint({
+   documentTitle: 'Title',
+   contentRef: contentRef,
+})
+
+  const handleTextToggle = (bounding: string, bs: number) => {
     // Example for parameters: bounding is `**`
     // and bs (bounding size | no of bounding chars) is 2 for bold
     const bounder = bounding;
@@ -92,19 +100,17 @@ const [showImagePopup, setShowImagePopup] = useState(false);
           direction="horizontal"
           className="flex w-full h-screen border-gray-300"
         >
-          <ResizablePanel id="code-panel" className="border-2 border-gray-800" defaultSize={50} minSize={40}>
+          <ResizablePanel ref={resizableEditorRef} id="code-panel" className="border-2 border-gray-800" defaultSize={50} minSize={0}>
             <div className="flex gap-8 items-center py-2 justify-center bg-black/90 text-white">
               <button aria-label="Bold" title="Bold" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("**", 2)}>B</button>
               <button aria-label="Italic" title="Italic" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("*", 1)}>I</button>
               <button aria-label="Strikethrough" title="Strikethrough" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => handleTextToggle("~", 1)}>S</button>
               <button aria-label="Insert Image" title="Insert Image" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setShowImagePopup(true)}>Image</button>
-               <ImagePopup
-            open={showImagePopup}
-            onOpenChange={setShowImagePopup}
-            onInsert={insertMarkdownAtCursor}
+              <ImagePopup
+                open={showImagePopup}
+                onOpenChange={setShowImagePopup}
+                onInsert={insertMarkdownAtCursor}
                 />
-
-
               <i className="text-gray-600">|</i>
               <button aria-label="Increase Font" title="Increase Font" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setFontSize((size) => size + 1)}>+</button>
               <button aria-label="Decrease Font" title="Decrease Font" className="hover:text-gray-500 hover:cursor-pointer text-sm" onClick={() => setFontSize((size) => Math.max(8, size - 1))}>-</button>
@@ -127,10 +133,10 @@ const [showImagePopup, setShowImagePopup] = useState(false);
             />
           </ResizablePanel>
           <ResizableHandle withHandle />
-          <ResizablePanel className="border-2 border-gray-800" defaultSize={50} maxSize={60} minSize={40}>
+          <ResizablePanel ref={resizableViewerRef} className="border-2 border-gray-800" defaultSize={50} maxSize={60} minSize={0}>
             <div className="flex gap-8 items-center py-2 px-4 justify-end bg-black/90 text-white">
               <RobotPopup setMarkdown={setMdText}></RobotPopup>
-              <button aria-label="Export PDF" title="Export PDF" className="hover:text-gray-500 hover:cursor-pointer">PDF</button>
+              <button onClick={handlePrint} aria-label="Export PDF" title="Export PDF" className="hover:text-gray-500 hover:cursor-pointer">PDF</button>
             </div>
             
             {/* <div className="p-10 overflow-auto h-[90%]">
@@ -140,6 +146,7 @@ const [showImagePopup, setShowImagePopup] = useState(false);
             <div
               className="p-10 overflow-auto h-[90%]"
               style={{ fontSize: fontSize }}
+              ref={contentRef}
             >
               <MarkdownComponent content={mdText} />
             </div>

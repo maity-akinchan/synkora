@@ -4,8 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import Sidebar, { SidebarItem } from "@/components/navigation/sidebar";
 import Header from "@/components/navigation/header";
-import { Home, BarChart3, Folder, Users, Settings, CheckLine, Copy } from 'lucide-react'
-import { IconChecklist } from "@tabler/icons-react";
+import { Home, Settings, Copy } from 'lucide-react'
 
 export const navigationItems: SidebarItem[] = [
   {
@@ -15,33 +14,9 @@ export const navigationItems: SidebarItem[] = [
     current: false,
   },
   {
-    label: "Analytics",
-    icon: <BarChart3 />,
-    navigate: "/analytics",
-    current: true,
-  },
-  {
-    label: "Tasks",
-    icon: <IconChecklist />,
-    navigate: "/tasks",
-    current: false,
-  },
-  {
-    label: "Projects",
-    icon: <Folder />,
-    navigate: "/projects",
-    current: false,
-  },
-  {
     label: "Templates",
     icon: <Copy />,
     navigate: "/templates",
-    current: false,
-  },
-  {
-    label: "Team Members",
-    icon: <Users />,
-    navigate: "/teams",
     current: false,
   },
   {
@@ -53,7 +28,7 @@ export const navigationItems: SidebarItem[] = [
 ];
 export function MainLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(true);
 
   const sidebarItems = navigationItems.map((item) => ({
     ...item,
@@ -71,18 +46,18 @@ export function MainLayout({ children }: { children: React.ReactNode }) {
          tagline={"Synchornize. Simplify. Succeed."}
       />
 
-      {sidebarOpen && (
-        <div className="md:hidden fixed inset-0 z-40">
-           <Sidebar
-             className="h-full w-64 flex flex-col fixed z-50 bg-white"
-             items={sidebarItems}
-             logoSrc={"/logo.png"}
-             title={"Synkora"}
-             tagline={"Synchornize. Simplify. Succeed."}
-           />
-           <div className="fixed inset-0 bg-black/30" onClick={() => setSidebarOpen(false)}></div>
-        </div>
-      )}
+      {/* // {sidebarOpen && ( 
+      //   <div className="md:hidden fixed inset-0 z-40">
+      //      <Sidebar
+      //        className="h-full w-64 flex flex-col fixed z-50 bg-white"
+      //        items={sidebarItems}
+      //        logoSrc={"/logo.png"}
+      //        title={"Synkora"}
+      //        tagline={"Synchornize. Simplify. Succeed."}
+      //      />
+      //      <div className="fixed inset-0 bg-black/30" onClick={() => setSidebarOpen(false)}></div>
+      //   </div>)
+      // } */}
 
       {/* Main Content Area */}
       <div className="flex flex-col flex-1 md:ml-56">

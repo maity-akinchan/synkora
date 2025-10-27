@@ -1,5 +1,6 @@
 import synkoraLogo from "@/assets/home/synkora-logo.png";
 import Image from "next/image";
+import logo from "../../../public/logo.png";
 
 export const Footer = () => {
   return (
@@ -9,7 +10,7 @@ export const Footer = () => {
           {/* Logo and Description */}
           <div className="md:col-span-2">
             <div className="flex items-center mb-4">
-              <Image src={synkoraLogo} alt="Synkora" className="w-8 h-8" />
+              <img src={"/logo.png"} alt="Synkora" className="w-10 h-10" />
             </div>
             <p className="text-muted-foreground mb-6 max-w-md">
               Your team's visual command center. Task management, live dashboards, and whiteboard collaboration in one powerful workspace.
