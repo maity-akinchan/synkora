@@ -35,7 +35,7 @@ export default function CreatingPage() {
       } else if (output.type.id == 2) {
         router.push(`/excalidraw/?${output.id}`)
       } else {
-        router.push(`/spreadsheet/?${output.id}`)
+        router.push(`/sheet/?${output.id}`)
       }
     })
 
