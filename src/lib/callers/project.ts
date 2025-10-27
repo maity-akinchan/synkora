@@ -66,3 +66,39 @@ export async function createProject(variables: CreateProjectVariables): Promise<
 
   return result;
 }
+
+export async function fetchProjects() {
+  const query = `
+    query {
+      projects {
+        id
+        name
+        createdAt
+        owner {
+          id
+          fullName
+        }
+      }
+    }
+  `;
+
+  try {
+    const response = await fetch("http://localhost:3000/api/graphql", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ query }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`GraphQL error: ${response.statusText}`);
+    }
+
+    const result = await response.json();
+    return result.data;
+  } catch (error) {
+    console.error("GraphQL request failed:", error);
+    throw error;
+  }
+}

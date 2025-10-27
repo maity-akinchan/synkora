@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import { createTeam } from "@/lib/callers/team";
+import { createProject } from "@/lib/callers/project";
+import { TeamSettingsPage } from "./user/team-settings";
 
 type Props = {
   onCreated?: () => void;
@@ -35,6 +37,13 @@ export default function CreateProjectModal({ onCreated }: Props) {
     });
 
     console.log("✅ Team created:", response.data.createTeam);
+    const projectResponse = await createProject({
+      name: name,
+      description: description,
+      ownerId: 13,
+      teamId: response.data.createTeam.id
+    })
+    console.log("Project Created: ", projectResponse.data.createProject)
   } catch (err) {
     console.error("❌ Error:", err);
     alert("Failed to create team");

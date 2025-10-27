@@ -29,6 +29,7 @@ export default function CreatingPage() {
     setDesignName(name);
     setDesignType(type);
     createDesign({name: name, projectId: 13, designTypeId: typeId, createdById: 1}).then((output) =>{
+    console.log(output.type.id)
       if (output.type.id == 1) {
         router.push(`/markdown/?${output.id}`)
       } else if (output.type.id == 2) {

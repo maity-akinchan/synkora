@@ -1,40 +1,22 @@
+"use client";
 import CreateProjectModal from "@/components/create-project-modal";
 import { ProjectCard } from "@/components/project-card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { fetchProjects } from "@/lib/callers/project";
+import { useEffect, useState } from "react";
 
-export default async function DashboardPage({
+export default function DashboardPage({
     searchParams,
 }: {
     searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-    // --- Mock session ---
-    const session = {
-        user: {
-            id: "user_123",
-            name: "John Doe",
-            email: "john@example.com",
-            image: "https://i.pravatar.cc/150?img=3",
-        },
-    };
-
-    // --- Mock data ---
-    const projects = [
+     const [projects, setProjects] = useState([
         {
             id: "p1",
             name: "Synkora",
             description: "Collaborative project management platform",
             createdAt: new Date("2025-05-10"),
-            members: [
-                {
-                    user: {
-                        id: "user_123",
-                        name: "John Doe",
-                        email: "john@example.com",
-                        image: "https://i.pravatar.cc/150?img=3",
-                    },
-                    role: "admin",
-                },
-            ],
+            
         },
         {
             id: "p2",
@@ -53,8 +35,37 @@ export default async function DashboardPage({
                 },
             ],
         },
-    ];
+    ]);
+    useEffect(() => {
+        fetchProjects().then((data) => {
+            console.log(data.projects); 
+            setProjects(data.projects);
+        });
+    }, []);
 
+    // --- Mock session ---
+   
+    const session = {
+        user: {
+            id: "user_123",
+            name: "John Doe",
+            email: "john@example.com",
+            image: "https://i.pravatar.cc/150?img=3",
+        },
+    };
+    // --- Mock data ---
+    const hardcodedMembers = [
+            {
+                user: {
+                    id: "user_123",
+                    name: "John Doe",
+                    email: "john@example.com",
+                    image: "https://i.pravatar.cc/150?img=3",
+                },
+                role: "admin",
+            },
+        ]
+    
     const invitations = [
         {
             id: "inv1",
@@ -65,13 +76,15 @@ export default async function DashboardPage({
             },
         },
     ];
-
+    let errorRaw, successRaw, errorKey, successKey;
     // --- Handle query params (mock) ---
-    const sp = await searchParams;
-    const errorRaw = sp?.inviteError;
-    const successRaw = sp?.inviteSuccess;
-    const errorKey = (Array.isArray(errorRaw) ? errorRaw[0] : errorRaw) || "";
-    const successKey = (Array.isArray(successRaw) ? successRaw[0] : successRaw) || "";
+    searchParams.then( (sp) => {
+        errorRaw = sp?.inviteError;
+        successRaw = sp?.inviteSuccess;
+        errorKey = (Array.isArray(errorRaw) ? errorRaw[0] : errorRaw) || "";
+        successKey = (Array.isArray(successRaw) ? successRaw[0] : successRaw) || "";
+    });
+    
 
     const errorMessage =
         errorKey === "missing_token"
@@ -203,17 +216,16 @@ export default async function DashboardPage({
             ) : (
                 <div className="mt-8 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {projects.map((p) => {
-                        const me = p.members.find((m) => m.user.id === session.user.id);
-                        const canAdmin = me?.role === "admin";
+                        const canAdmin = "admin";
                         return (
                             <ProjectCard
                                 key={p.id}
                                 project={{
                                     id: p.id,
                                     name: p.name,
-                                    description: p.description,
+                                    description: "NOT PROVIDED",
                                     createdAt: p.createdAt,
-                                    members: p.members,
+                                    members: hardcodedMembers,
                                 }}
                                 canAdmin={!!canAdmin}
                             />
