@@ -22,6 +22,26 @@ export async function authorizationCheck() {
   }
 }
 
+/**
+ * Get the authenticated user's ID from the JWT token stored in cookies
+ * Returns null if token is missing, invalid, or expired
+ */
+export async function getAuthUserId(): Promise<number | null> {
+  try {
+    const token = (await cookies()).get('token')?.value;
+
+    if (!token) {
+      return null;
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as { id: number };
+    return decoded.id;
+  } catch (err: any) {
+    console.error('Failed to get auth user ID:', err.message);
+    return null;
+  }
+}
+
 export async function setUserCookies(token: string, user: PublicUser) {
   try {
     const cookieStore = await cookies();

@@ -12,12 +12,24 @@ import {onSignup} from "@/lib/commons/auth";
 export default function AuthForm() {
     const [show, setShow] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
+    const [errorState, setErrorState] = React.useState(0) // 0 = success, 1 = error
+    const [errorMessage, setErrorMessage] = React.useState('')
 
-    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        const nullfunc = () => {console.log("xD")}
-        onSignup(e, nullfunc, nullfunc, nullfunc)
+        setErrorState(0)
+        setErrorMessage('')
+        
+        try {
+            await onSignup(e, setErrorState, setErrorMessage)
+        } catch (error) {
+            console.error('Signup error:', error)
+            setErrorState(1)
+            setErrorMessage('An unexpected error occurred')
+        } finally {
+            setLoading(false)
+        }
     }
 
 
@@ -50,6 +62,20 @@ export default function AuthForm() {
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4">
+                {/* Error message display */}
+                {errorState === 1 && errorMessage && errorMessage !== 'Success' && (
+                    <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
+                        {errorMessage}
+                    </div>
+                )}
+
+                {/* Success message display */}
+                {errorState === 0 && errorMessage === 'Success' && (
+                    <div className="rounded-xl bg-green-500/10 border border-green-500/20 px-4 py-3 text-sm text-green-400">
+                        Account created successfully! Redirecting to login...
+                    </div>
+                )}
+
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                     <div className="space-y-2">
                         <Label htmlFor="firstName">First name</Label>
@@ -121,7 +147,7 @@ export default function AuthForm() {
                     disabled={loading}
                     className="mt-2 w-full justify-center rounded-xl bg-white text-black hover:bg-white/90"
                 >
-                    {loading ? "Signing up..." : <Button type="submit">Sign Up</Button>}
+                    {loading ? "Signing up..." : "Sign Up"}
                 </Button>
 
                 <p className="text-center text-sm text-white/60">

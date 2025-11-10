@@ -17,11 +17,44 @@ interface SignupResponse {
   message?: string
 }
 
+/**
+ * Get the current user from the 'user' cookie (client-side only)
+ * Returns null if not logged in or cookie doesn't exist
+ */
+export function getCurrentUser(): any | null {
+  if (typeof window === 'undefined') return null;
+  
+  try {
+    const cookies = document.cookie.split(';');
+    const userCookie = cookies.find(c => c.trim().startsWith('user='));
+    
+    if (!userCookie) return null;
+    
+    const userJson = decodeURIComponent(userCookie.split('=')[1]);
+    return JSON.parse(userJson);
+  } catch (error) {
+    console.error('Error getting current user:', error);
+    return null;
+  }
+}
+
+/**
+ * Check if user is authenticated (client-side only)
+ * Returns true if 'user' cookie exists
+ */
+export function isAuthenticated(): boolean {
+  if (typeof window === 'undefined') return false;
+  
+  const cookies = document.cookie.split(';');
+  return cookies.some(c => c.trim().startsWith('user='));
+}
+
 async function postJson<T = unknown>(url: string, body: unknown) {
   const res = await fetch(url, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(body),
+    credentials: 'include', // Ensure cookies are sent and received
   })
 
   const data = await res.json().catch(() => ({}))
@@ -64,14 +97,14 @@ export async function onLogin(
     const { ok, data } = await postJson<LoginResponse>('/api/auth/login', { username, password })
 
     if (!ok) {
-  errorMessage = (data && (data as LoginResponse).message) || 'Login failed'
+      errorMessage = (data && (data as LoginResponse).message) || 'Login failed'
     } else {
       const { success, token, user } = data as LoginResponse
       if (success && token && user) {
         errorMessage = 'Success'
         errorState = 0
       } else {
-  errorMessage = 'Invalid response from server'
+        errorMessage = 'Invalid response from server'
       }
     }
   } catch (err: unknown) {
@@ -115,8 +148,15 @@ export async function onSignup(
     return
   }
 
+  if (password.length < 8) {
+    errorMessage = 'Password must be at least 8 characters'
+    setErrorState(errorState)
+    setErrorMessage(errorMessage)
+    return
+  }
+
   try {
-    const { ok, data } = await postJson<SignupResponse>('/api/user', { email, name, username, password })
+    const { ok, data } = await postJson<SignupResponse>('/api/auth/signup', { email, name, username, password })
 
     if (!ok) {
       errorMessage = (data && (data as SignupResponse).message) || 'Signup failed'
@@ -137,7 +177,25 @@ export async function onSignup(
     setErrorState(errorState)
     setErrorMessage(errorMessage)
     if (errorMessage === 'Success') {
-      redirect('/dashboard', RedirectType.push)
+      // After successful signup, redirect to login
+      redirect('/signin', RedirectType.push)
     }
+  }
+}
+
+/**
+ * Handle logout. Clears cookies and redirects to home.
+ */
+export async function onLogout() {
+  try {
+    await fetch('/api/auth/logout', {
+      method: 'POST',
+      credentials: 'include',
+    })
+  } catch (err) {
+    console.error('Logout error:', err)
+  } finally {
+    // Always redirect to home even if logout fails
+    redirect('/', RedirectType.push)
   }
 }

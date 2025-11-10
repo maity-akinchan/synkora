@@ -8,20 +8,30 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import {onLogin} from "@/lib/commons/auth"
+import { onLogin } from "@/lib/commons/auth"
 
 export default function SignInForm() {
     const [show, setShow] = React.useState(false)
     const [loading, setLoading] = React.useState(false)
+    const [errorState, setErrorState] = React.useState(0) // 0 = success, 1 = error
+    const [errorMessage, setErrorMessage] = React.useState('')
     const router = useRouter()
 
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         setLoading(true)
-        const nullfunc = () => {
-            console.log("xD");
+        setErrorState(0)
+        setErrorMessage('')
+        
+        try {
+            await onLogin(e, setErrorState, setErrorMessage)
+        } catch (error) {
+            console.error('Login error:', error)
+            setErrorState(1)
+            setErrorMessage('An unexpected error occurred')
+        } finally {
+            setLoading(false)
         }
-        await onLogin(e, nullfunc, nullfunc, nullfunc);
     }
 
     return (
@@ -53,6 +63,13 @@ export default function SignInForm() {
             </div>
 
             <form onSubmit={onSubmit} className="space-y-4">
+                {/* Error message display */}
+                {errorState === 1 && errorMessage && errorMessage !== 'Success' && (
+                    <div className="rounded-xl bg-red-500/10 border border-red-500/20 px-4 py-3 text-sm text-red-400">
+                        {errorMessage}
+                    </div>
+                )}
+
                 <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input

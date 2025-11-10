@@ -6,8 +6,13 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
-  url      = env("AZURESQL_URL")
+  provider          = "sqlserver"
+  url               = env("AZURESQL_URL")
+  // Shadow database is required for Azure SQL migrations
+  // Option 1: Use a separate shadow database (recommended for production)
+  // shadowDatabaseUrl = env("AZURESQL_SHADOW_URL")
+  // Option 2: Azure SQL doesn't support automatic shadow databases
+  // Use "prisma db push" instead of "prisma migrate dev" for development
 }
 
 // =====================================
@@ -39,6 +44,8 @@ model User {
   createdTemplates DesignTemplate[]
   comments        DesignComment[]
   activityLogs    ActivityLog[]
+  sentInvites     TeamInvite[]     @relation("InviteSender")
+  acceptedInvites TeamInvite[]     @relation("InviteAcceptor")
 
   @@index([email], map: "idx_user_email")
   @@index([username], map: "idx_user_username")
@@ -87,6 +94,7 @@ model Team {
   members      TeamMember[]
   projects     Project[]
   activityLogs ActivityLog[]
+  invites      TeamInvite[]
 }
 
 model TeamRole {
@@ -95,6 +103,7 @@ model TeamRole {
 
   members           TeamMember[]
   projectPermissions ResourcePermission[]
+  invites           TeamInvite[]
 }
 
 model TeamMember {
@@ -113,6 +122,28 @@ model TeamMember {
   @@unique([teamId, userId])
   @@index([teamId])
   @@index([userId])
+}
+
+model TeamInvite {
+  id          Int      @id @default(autoincrement())
+  teamId      Int
+  email       String   @db.NVarChar(150)
+  roleId      Int
+  inviterId   Int
+  tokenHash   String   @unique @db.NVarChar(64)
+  status      String   @default("PENDING") @db.NVarChar(20)
+  expiresAt   DateTime
+  createdAt   DateTime @default(dbgenerated("sysutcdatetime()"))
+  acceptedById Int?
+
+  team       Team     @relation(fields: [teamId], references: [id], onDelete: Cascade)
+  role       TeamRole @relation(fields: [roleId], references: [id])
+  inviter    User     @relation("InviteSender", fields: [inviterId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  acceptedBy User?    @relation("InviteAcceptor", fields: [acceptedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([email])
+  @@index([teamId])
+  @@index([tokenHash])
 }
 
 model Project {
